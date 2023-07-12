@@ -1,1 +1,4 @@
 -r base.txt
+
+django_debug_toolbar
+python-dotenv
