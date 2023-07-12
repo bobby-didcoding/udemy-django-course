@@ -17,19 +17,37 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
-
-# Application definition
-
-INSTALLED_APPS = [
+# --------------------------------------------------------------
+# Installed apps
+# --------------------------------------------------------------
+DJANGO_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sitemaps',
+    'django.contrib.sites',
 ]
 
+
+THIRD_PARTY_APPS = [
+    'debug_toolbar',
+]
+
+APPS = [
+
+]
+
+INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + APPS
+SITE_ID = 1
+# --------------------------------------------------------------
+# End Installed apps
+# --------------------------------------------------------------
+
 MIDDLEWARE = [
+    'debug_toolbar.middleware.DebugToolbarMiddleware',#needed for django debug toolbar
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
