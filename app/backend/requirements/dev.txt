@@ -1,4 +1,4 @@
 -r base.txt
 
-django_debug_toolbar
-python-dotenv
+django-debug-toolbar==4.1.0
+python-dotenv==1.0.0
