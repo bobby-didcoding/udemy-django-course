@@ -39,7 +39,7 @@ THIRD_PARTY_APPS = [
 APPS = [
     'core',
     'ecommerce',
-    'tasks'
+    'tasks',
     'users'
 ]
 
