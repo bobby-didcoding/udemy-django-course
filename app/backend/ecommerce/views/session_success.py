@@ -27,7 +27,7 @@ class SessionSuccessView(generic.DetailView):
     def get(self, request, session_id, *args, **kwargs):
         obj = get_object_or_404(self.model_object, id = session_id)
         obj.empty_cart
-        obj.delete_session
+        obj.delete()
         context={}
         return render(request, self.template_name, context)
     
