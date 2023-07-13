@@ -1,25 +1,14 @@
 # --------------------------------------------------------------
 # Django imports
 # --------------------------------------------------------------
-
-from django.shortcuts import  render
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
-
 
 # --------------------------------------------------------------
 # App imports
 # --------------------------------------------------------------
 from ecommerce.models import Session
 
-# --------------------------------------------------------------
-# project imports
-# --------------------------------------------------------------
-from notifications.models import Notification
-from utils.abstracts import MustBeParentView
-from events.utils import CampBookingHandler, BookingHandler
-from utils.fields.enums import ExperienceType
-from users.models import Squaddy
 
 @login_required
 def session_create(request):
