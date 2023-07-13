@@ -12,9 +12,9 @@ from django.contrib.auth.decorators import login_required
 from ecommerce.models import Product, InvoiceItem
 
 
-class CartView(generic.DetailView):
+class CartView(generic.TemplateView):
 	"""
-    DetailView to display all items in a users cart.
+    TemplateView to display all items in a users cart.
 
     **Context**
 
