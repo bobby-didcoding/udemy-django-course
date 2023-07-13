@@ -19,7 +19,7 @@ class ProductsView(generic.ListView):
     :template:`ecommerce/products.html`
     """
 	model = Product
-	template_name = "products/products.html"
+	template_name = "ecommerce/products.html"
 	paginate_by = 100
 
 	def get_queryset(self):
