@@ -51,3 +51,10 @@ class Session(
 
     session_mode = EnumField(SessionMode, blank=True, null=True, verbose_name=_('session mode'), default=SessionMode.payment)
     session_status = EnumField(SessionStatus, blank=True, null=True, verbose_name=_('session status'), default=SessionStatus.open)
+
+    @property
+    def empty_cart(self):
+        cart = self.customer.user.cart_user
+        for p in cart.products.all():
+            cart.products.remove(p)
+        cart.save()

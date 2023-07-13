@@ -12,7 +12,7 @@ from django.db import models
 # --------------------------------------------------------------
 # App imports
 # --------------------------------------------------------------
-from ecommerce.models import Customer
+from ecommerce.models import Customer, Product
 
 # --------------------------------------------------------------
 # Project imports
@@ -28,3 +28,10 @@ class Cart(Model):
         on_delete=models.CASCADE,
         verbose_name=_('user'),
         related_name="cart_customer")
+
+    products = models.ManyToManyField(
+        Product,
+        blank=True,
+        related_name="cart_products",
+        verbose_name=_('products')
+    )
