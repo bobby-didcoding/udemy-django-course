@@ -13,6 +13,8 @@ class ContactForm(forms.ModelForm):
     '''
     Basic model-form for our contact model
     '''
+    recaptcha_token = forms.CharField(
+        widget=forms.HiddenInput())
 
     name = forms.CharField(max_length=100, required=True,
 		widget=forms.TextInput(attrs={

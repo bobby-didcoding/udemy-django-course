@@ -9,6 +9,7 @@ from core.models.blog import Blog
 from core.models.certificate import Certificate
 from core.models.portfolio import Portfolio
 from core.models.testimonial import Testimonial
+from core.models.skill import Skill
 
 
 
@@ -19,5 +20,6 @@ __all__ = [
     Blog,
     Certificate,
     Portfolio,
-    Testimonial
+    Testimonial,
+    Skill
 ]
