@@ -12,7 +12,7 @@ __all__ = [
     CartView,
     SessionSuccessView,
     SessionCancelledView,
-    ProductsView,
+    ProductView,
     ProductsView,
     session_create
 ]
