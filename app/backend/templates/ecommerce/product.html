@@ -83,7 +83,7 @@
           </div>
           <div class="col-lg-6 mb--40">
               <h2>{{object.title}}</h2>
-              <p>$5000.00</p>
+              <p>£{{object.price.amount}}</p>
               {{object.body|safe}}
               
               {% if request.user.is_authenticated %}

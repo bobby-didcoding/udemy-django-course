@@ -85,8 +85,8 @@
                         </tr>
                     </thead>
                     <tbody>
+                        {% for object in %}
                         <tr>
-                            
                             <td class="product-thumbnail"><a href="single-product.html"><img src="{% static 'images/logo.png' %}" alt="Digital Product"></a></td>
                             <td class="product-title"><a href="single-product.html">Wireless PS Handler</a></td>
                             <td class="product-price" data-title="Price">124.00</td>
@@ -94,22 +94,7 @@
                             <td class="product-subtotal" data-title="Subtotal">275.00</td>
                             <td class="product-remove"><a href="#" style="color:red">X</a></td>
                         </tr>
-                        <tr>
-                            <td class="product-thumbnail"><a href="single-product-2.html"><img src="{% static 'images/logo.png' %}" alt="Digital Product"></a></td>
-                            <td class="product-title"><a href="single-product-2.html">Gradient Light Keyboard</a></td>
-                            <td class="product-price" data-title="Price">124.00</td>
-                            <td class="product-quantity" data-title="Qty">1</td>
-                            <td class="product-subtotal" data-title="Subtotal">275.00</td>
-                            <td class="product-remove"><a href="#" style="color:red">X</a></td>
-                        </tr>
-                        <tr>
-                            <td class="product-thumbnail"><a href="single-product-3.html"><img src="{% static 'images/logo.png' %}" alt="Digital Product"></a></td>
-                            <td class="product-title"><a href="single-product-3.html">HD CC Camera</a></td>
-                            <td class="product-price" data-title="Price">124.00</td>
-                            <td class="product-quantity" data-title="Qty">1</td>
-                            <td class="product-subtotal" data-title="Subtotal">275.00</td>
-                            <td class="product-remove"><a href="#" style="color:red">X</a></td>
-                        </tr>
+                        {% endfor %}
                     </tbody>
                 </table>
             </div>
