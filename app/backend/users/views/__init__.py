@@ -1,18 +1,16 @@
 # --------------------------------------------------------------
 # App imports
 # --------------------------------------------------------------
-from users.views.obtain_auth_token import ObtainAuthToken
-from users.views.register import RegisterAndObtainAuthToken
-from users.views.custom_user import CustomUserViewSet
-from users.views.activate_email import ActivationEmail
+from users.views.signup import SignUpView
+from users.views.signout import logout
+from users.views.login import login_user
 from users.views.activate import activate
-from users.views.password_reset_email import PasswordResetEmail
+from users.views.forgotten_password import forgotten_password
 
 __all__ = [
-    ObtainAuthToken,
-    RegisterAndObtainAuthToken,
-    CustomUserViewSet,
-    ActivationEmail,
+    SignUpView,
+    logout,
+    login_user,
     activate,
-    PasswordResetEmail
+    forgotten_password
 ]
