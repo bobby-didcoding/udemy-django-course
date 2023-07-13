@@ -35,3 +35,14 @@ class Cart(Model):
         related_name="cart_products",
         verbose_name=_('products')
     )
+
+    @property
+    def total(self):
+        count = 0
+        for p in self.products.all():
+            count += p.price.amount
+        return count
+    
+    @property
+    def stripe_amount(self):
+        return int(self.total * 100)
