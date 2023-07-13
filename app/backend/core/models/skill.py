@@ -20,22 +20,15 @@ from utils.abstracts import Model
 from django_extensions.db.models import TitleSlugDescriptionModel
 
 
-
-def certificate_directory_path(instance, filename):
-    # file will be uploaded to MEDIA_ROOT/certificates/<slug>/<filename>
-    return os.path.join('certificates', str(instance.slug), filename)
-
-
-
-class Certificate(
+class Skill(
     TitleSlugDescriptionModel,
     Model
     ):
     '''
-    Our Certificate model.
+    Our Skill model.
     '''
 
-    image = models.ImageField(_('image'),upload_to=certificate_directory_path, default="default_image.jpg")
+    score = models.IntegerField(_('score'))
 
     def __str__(self):
         return f'{self.title}'
