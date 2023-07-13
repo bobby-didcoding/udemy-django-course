@@ -8,7 +8,7 @@ from django.utils.decorators import async_only_middleware
 # Project imports
 # --------------------------------------------------------------
 from core.models import NewsLetter
-from utils.mixins import reCAPTCHAValidation, FormErrors
+from utils.mixins import recaptcha_form_submission, FormErrors
 from core.forms import  GenericNewsLetterForm 
 
 class NewsLetterFormMiddleware:
@@ -27,8 +27,8 @@ class NewsLetterFormMiddleware:
             form = GenericNewsLetterForm(data=request.POST)
             if form.is_valid():
                 token = form.cleaned_data.get('nl_recaptcha_token')
-                captcha = reCAPTCHAValidation(token)
-                if captcha["success"]:
+                captcha = recaptcha_form_submission(token)
+                if captcha:
 
                     #is the email already registered?
                     nl_email = form.cleaned_data.get('nl_email')
