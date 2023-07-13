@@ -6,7 +6,14 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
+from django.views import defaults as default_views
 from users.forms import EmailValidationOnForgotPassword
+
+handler400 = 'course.views.handler400' 
+handler403 = 'course.views.handler403'
+handler404 = 'course.views.handler404'
+handler500 = 'course.views.handler500'
+handler503 = 'course.views.handler503'
 
 urlpatterns = [
     path('admin/', admin.site.urls),
