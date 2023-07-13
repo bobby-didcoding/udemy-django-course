@@ -10,11 +10,9 @@ from django.utils.translation import gettext_lazy as _
 from utils.abstracts import Model
 
 
-class Contact(Model):
+class NewsLetter(Model):
 
-    name = models.CharField(_('name'),max_length=100)
-    email = models.EmailField(_('email'), max_length=255)
-    message = models.TextField(_('message'),max_length=1000)
+    nl_email = models.EmailField(_('newsletter email'), max_length=255)
 
     def __str__(self):
-        return f'{self.name}'
+        return f'{self.nl_email}'
