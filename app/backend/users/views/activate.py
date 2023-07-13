@@ -13,7 +13,6 @@ from django.http import HttpResponseRedirect
 from django.utils.encoding import force_str
 from django.contrib.auth import login
 from django.utils.http import urlsafe_base64_decode
-from django.conf import settings
 
 # --------------------------------------------------------------
 # Project imports
@@ -25,7 +24,9 @@ account_activation_token = AccountActivationTokenGenerator()
 User = get_user_model()
 
 def activate(request, uidb64, token):
-
+	'''
+	Activate a user from an email link
+	'''
 	try:
 		uid = force_str(urlsafe_base64_decode(uidb64))
 		user = User.objects.get(pk=uid)
@@ -36,9 +37,6 @@ def activate(request, uidb64, token):
 		user.is_active = True
 		user.save()
 		login(request, user)
-		next_url = request.GET.get("next")
-		if next_url:
-			return HttpResponseRedirect(next_url)
-		return redirect(settings.DJOSER["ACTIVATION_REDIRECT_URL"])
+		return redirect('core:home')
 	else:
-		return redirect(settings.DJOSER["ACTIVATION_REDIRECT_FAIL_URL"])
+		return HttpResponse('Invalid')

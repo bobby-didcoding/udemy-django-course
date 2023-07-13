@@ -1,8 +1,14 @@
 # --------------------------------------------------------------
+# Python imports
+# --------------------------------------------------------------
+import six
+
+# --------------------------------------------------------------
 # Django imports
 # --------------------------------------------------------------
 from django.conf import settings
 from django.http import JsonResponse
+from django.contrib.auth.tokens import PasswordResetTokenGenerator
 
 
 # --------------------------------------------------------------
@@ -88,3 +94,11 @@ def recaptcha_form_submission(token):
 	if captcha["success"]:
 		return True
 	return False
+
+
+class AccountActivationTokenGenerator(PasswordResetTokenGenerator):
+    def _make_hash_value(self, user, timestamp):
+        return (
+            six.text_type(user.pk) + six.text_type(timestamp) +
+            six.text_type(user.is_active)
+        )
