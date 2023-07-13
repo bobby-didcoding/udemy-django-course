@@ -6,19 +6,19 @@ from django.views import generic
 # --------------------------------------------------------------
 # App imports
 # --------------------------------------------------------------
-from core.models import Policy
+from core.models import Portfolio
 
 
-class PolicyView(generic.DetailView):
+class PortfolioView(generic.DetailView):
     """
-    DetailView used for our Policy page.
+    DetailView used for our Portfolio page.
 
     **Template:**
 
-    :template:`core/policy.html`
+    :template:`core/portfolio.html`
     """
-    model = Policy
-    template_name = "core/policy.html"
+    model = Portfolio
+    template_name = "core/portfolio.html"
 
     def get_object(self):
         return self.model.objects.get(slug=self.kwargs['slug'])
