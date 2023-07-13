@@ -75,3 +75,11 @@ if DEBUG:
 # END DEBUG TOOLBAR SETTINGS
 # --------------------------------------------------------------
 
+# --------------------------------------------------------------
+# RECAPTCHA SETTINGS
+# --------------------------------------------------------------
+RECAPTCHA_PUBLIC_KEY = os.environ.get("RECAPTCHA_PUBLIC_KEY")
+RECAPTCHA_PRIVATE_KEY = os.environ.get("RECAPTCHA_PRIVATE_KEY")
+# --------------------------------------------------------------
+# END RECAPTCHA SETTINGS
+# --------------------------------------------------------------
