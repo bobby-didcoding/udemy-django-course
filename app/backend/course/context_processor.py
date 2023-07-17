@@ -6,8 +6,7 @@ from django.conf import settings
 # --------------------------------------------------------------
 # Project imports
 # --------------------------------------------------------------
-from core.models import  Policy
-
+from core.models import Policy
 
 def project_context(request):
 
