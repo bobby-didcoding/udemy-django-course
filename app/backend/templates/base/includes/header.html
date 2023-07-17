@@ -22,9 +22,12 @@
                   <li><a href="{% url 'core:contact' %}">Contact</a></li>
                   <li><a href="{% url 'core:policies' %}">Policies</a></li>
                   <li><a href="{% url 'ecommerce:products' %}">Shop</a></li>
+                  {% if  not request.user.is_authenticated %}
                   <li><a href="{% url 'users:signup' %}">Sign-up</a></li>
-                  <!-- <li><a href="{% url 'users:login' %}">Sign-in</a></li>
-                  <li><a href="cart.html">Cart</a></li>-->
+                  {% else %}
+                  <li><a href="{% url 'users:logout' %}">Logout</a></li>
+                  <li><a href="{% url 'ecommerce:cart' %}">Cart</a></li>
+                  {% endif %}
                 </ul>
               </div>
             </div>
