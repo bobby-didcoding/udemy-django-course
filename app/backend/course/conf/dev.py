@@ -76,15 +76,6 @@ if DEBUG:
 # --------------------------------------------------------------
 
 # --------------------------------------------------------------
-# RECAPTCHA SETTINGS
-# --------------------------------------------------------------
-RECAPTCHA_PUBLIC_KEY = os.environ.get("RECAPTCHA_PUBLIC_KEY")
-RECAPTCHA_PRIVATE_KEY = os.environ.get("RECAPTCHA_PRIVATE_KEY")
-# --------------------------------------------------------------
-# END RECAPTCHA SETTINGS
-# --------------------------------------------------------------
-
-# --------------------------------------------------------------
 # EMAIL SETTINGS
 # --------------------------------------------------------------
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -96,8 +87,26 @@ if EMAIL_USE_TLS:
 else:
     EMAIL_USE_TLS = False
 EMAIL_HOST_USER = os.environ.get("DONOT_REPLY_EMAIL")
-DISPLAY_NAME = "Udemy course"
+DISPLAY_NAME = "Udemy Course"
 EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_PASSWORD")
 # --------------------------------------------------------------
 # END EMAIL SETTINGS
+# --------------------------------------------------------------
+
+
+# --------------------------------------------------------------
+# RECAPTCHA SETTINGS
+# --------------------------------------------------------------
+RECAPTCHA_PUBLIC_KEY = os.environ.get("RECAPTCHA_PUBLIC_KEY")
+RECAPTCHA_PRIVATE_KEY = os.environ.get("RECAPTCHA_PRIVATE_KEY")
+# --------------------------------------------------------------
+# END RECAPTCHA SETTINGS
+# --------------------------------------------------------------
+
+# --------------------------------------------------------------
+# COOKIE SETTINGS
+# --------------------------------------------------------------
+COOKIE_BOT = os.environ.get("COOKIE_BOT",None)
+# --------------------------------------------------------------
+# END COOKIE SETTINGS
 # --------------------------------------------------------------
