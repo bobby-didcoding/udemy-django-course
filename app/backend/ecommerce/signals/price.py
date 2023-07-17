@@ -18,7 +18,7 @@ from ecommerce.models import Product
 logger = logging.getLogger(__name__)
 
 @receiver(post_save, sender=Product, weak=False)
-def create_product(sender, instance, created, **kwargs):
+def create_price(sender, instance, created, **kwargs):
     if created:
         '''
         Create a stripe product
