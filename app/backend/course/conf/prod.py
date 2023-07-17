@@ -47,3 +47,40 @@ MEDIA_ROOT = os.path.join(BASE_DIR,'mediafiles')
 # --------------------------------------------------------------
 # END STATICFILES SETTINGS
 # --------------------------------------------------------------
+
+
+# --------------------------------------------------------------
+# EMAIL SETTINGS
+# --------------------------------------------------------------
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = os.environ.get("EMAIL_HOST")
+EMAIL_PORT = os.environ.get("EMAIL_PORT")
+EMAIL_USE_TLS = os.environ.get("EMAIL_USE_TLS")
+if EMAIL_USE_TLS:
+    EMAIL_USE_TLS = True
+else:
+    EMAIL_USE_TLS = False
+EMAIL_HOST_USER = os.environ.get("DONOT_REPLY_EMAIL")
+DISPLAY_NAME = "Udemy Course"
+EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_PASSWORD")
+# --------------------------------------------------------------
+# END EMAIL SETTINGS
+# --------------------------------------------------------------
+
+
+# --------------------------------------------------------------
+# RECAPTCHA SETTINGS
+# --------------------------------------------------------------
+RECAPTCHA_PUBLIC_KEY = os.environ.get("RECAPTCHA_PUBLIC_KEY")
+RECAPTCHA_PRIVATE_KEY = os.environ.get("RECAPTCHA_PRIVATE_KEY")
+# --------------------------------------------------------------
+# END RECAPTCHA SETTINGS
+# --------------------------------------------------------------
+
+# --------------------------------------------------------------
+# COOKIE SETTINGS
+# --------------------------------------------------------------
+COOKIE_BOT = os.environ.get("COOKIE_BOT",None)
+# --------------------------------------------------------------
+# END COOKIE SETTINGS
+# --------------------------------------------------------------
