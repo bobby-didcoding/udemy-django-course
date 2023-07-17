@@ -15,17 +15,14 @@
  }
  
  
- function getLink(){
-     var submit_button = $('#get-link-button')
+ function manageCart(url){
      $.ajax({
-         url: "/squad-coach/get-new-account-link/",
+         url: url,
          method: "POST",
          success: function(json){
-             CustomFormSubmitResponse(submit_button);
              ShowAlert(json["result"], json["message"], json["result"].toLowerCase(), json["redirect"]);
          },
          error: function(xhr){
-             CustomFormSubmitResponse(submit_button);
              console.log(xhr.status + ": " + xhr.responseText);
          }
      })
@@ -104,15 +101,6 @@
      CourseFunctions.init();
      
  });
- /* Document.ready END */
- 
- /* Window Load START */
-//  jQuery(window).on('load',function () {
-//      'use strict'; 
-//      CourseFunctions.load();
-     
-//  });
-
  
  $(function() {
      // This function gets cookie with a given name

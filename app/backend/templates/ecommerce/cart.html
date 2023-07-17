@@ -71,7 +71,6 @@
     <!-- Start Cart Area  -->
     <div class="sectionSpaceSm lightBg">
         <div class="container">
-            <a href="#" class="btn btnPrimary">Clear Shoping Cart</a>
             <div class="table-responsive">
                 <table class="table">
                     <thead>
@@ -85,14 +84,14 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for object in request.users.customer_user.cart_customer.products.all %}
+                        {% for object in request.user.customer_user.cart_customer.products.all %}
                         <tr>
-                            <td class="product-thumbnail"><a href="{{object.get_absolute_url}}"><img src="{{object.image.url}}" alt="{{object.title}} image"></a></td>
+                            <td class="product-thumbnail"><a href="{{object.get_absolute_url}}"><img src="{{object.image.url}}" height="50" alt="{{object.title}} image"></a></td>
                             <td class="product-title"><a href="{{object.get_absolute_url}}">{{object.title}}</a></td>
-                            <td class="product-price" data-title="Price">{{object.price.amount}}</td>
+                            <td class="product-price" data-title="Price">£{{object.price.amount}}</td>
                             <td class="product-quantity" data-title="Qty">1</td>
-                            <td class="product-subtotal" data-title="Subtotal">{{object.price.amount}}</td>
-                            <td class="product-remove"><a href="#" style="color:red">X</a></td>
+                            <td class="product-subtotal" data-title="Subtotal">£{{object.price.amount}}</td>
+                            <td class="product-remove"><a href="javacript:void(0)" onclick="manageCart('/manage-cart/{{object.id}}/remove/')" style="color:red">X</a></td>
                         </tr>
                         {% endfor %}
                     </tbody>
@@ -106,7 +105,7 @@
                           
                           <tr class="order-total">
                               <td>Total</td>
-                              <td class="order-total-amount">£{{request.user.cutomer_user.cart_customer.total}}</td>
+                              <td class="order-total-amount">£{{request.user.customer_user.cart_customer.total}}</td>
                           </tr>
                       </tbody>
                   </table>
