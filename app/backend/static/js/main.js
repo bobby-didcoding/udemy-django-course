@@ -30,6 +30,7 @@
  
  function ajaxForm(form, data){
      var submit_button = getSubmitButton(form)
+     console.log(data)
      $.ajax({
          url: form.attr("action"),
          method: form.attr("method"),
@@ -68,7 +69,7 @@
      };
 
      var nlSecureBasicForm = function () {
-        var form = $('#securebasicform')
+        var form = $('#nlsecurebasicform')
         var submit_button = getSubmitButton(form)
         form.submit(function(event){
             event.preventDefault();

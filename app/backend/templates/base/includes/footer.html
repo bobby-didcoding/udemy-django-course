@@ -9,7 +9,7 @@
             <li><a href="{{my_linkedin}}" target="_blank"><img src="{% static 'images/linkedin.svg' %}" alt="..."></a></li>
         </ul>
         <div class="copyrightCol">
-            <form id="securebasicform" action="{{request.path}}" method="POST" accept-charset="utf-8">
+            <form id="nlsecurebasicform" action="{{request.path}}" method="POST" accept-charset="utf-8">
                 {% csrf_token %}
                 {{request.generic_nl_form.nl_email}}
                 {{request.generic_nl_form.nl_recaptcha_token}}
