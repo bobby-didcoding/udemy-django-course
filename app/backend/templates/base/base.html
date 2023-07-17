@@ -38,8 +38,10 @@
     {% cache None head_imports %}
 
     <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
-    <link rel="stylesheet" href="https://unpkg.com/swiper@7.0.5/swiper-bundle.min.css">
+    <link href="{% static 'css/swiper-bundle.min.css' %}" rel="stylesheet">
     <link href="{% static 'css/style.css' %}" rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static 'css/toastr.css' %}" type="text/css">
     
     {% endcache %}
     
@@ -103,14 +105,20 @@ End Footer
 <!-- ================================
 	START Base SCRIPTS
 ================================= -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="{% static 'js/global.min.js' %}"></script>
 <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
-<script src="https://unpkg.com/swiper@7.0.5/swiper-bundle.min.js"></script>
+<script src="{% static 'js/swiper-bundle.min.js' %}"></script>
 <script src="{% static 'js/script.js' %}"></script>
+
+<script src="{% static 'js/toastr.js' %}"></script>
+<script src="{% static 'js/alert.js' %}"></script>
+<script src="{% static 'js/main.js' %}"></script>
+
 
 {% endcache %}
 {% block extend_footer %} {% endblock %}
 
+{% include 'base/includes/messages.html' %}
 <!-- ================================
 	End Base scripts
 ================================= -->
