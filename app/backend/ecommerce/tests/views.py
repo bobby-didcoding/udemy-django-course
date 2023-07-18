@@ -225,8 +225,6 @@ class SessionCancelViewTestCase(EcommerceViewTestBase, TestCase):
         self.assertEqual(response.status_code, 405)
 
 
-
-
 class ProductsViewTestCase(EcommerceViewTestBase, TestCase):
     """
     Test suite for Products
