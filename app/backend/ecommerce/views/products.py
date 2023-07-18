@@ -23,4 +23,4 @@ class ProductsView(generic.ListView):
 	paginate_by = 100
 
 	def get_queryset(self):
-		return self.model.objects.active()
+		return self.model.objects.active().order_by("-created")
