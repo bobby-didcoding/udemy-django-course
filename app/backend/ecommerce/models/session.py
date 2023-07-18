@@ -55,7 +55,7 @@ class Session(
 
     @property
     def empty_cart(self):
-        cart = self.customer.user.cart_user
+        cart = self.customer.cart_customer
         for p in cart.products.all():
             cart.products.remove(p)
         cart.save()
