@@ -13,7 +13,7 @@ def session_create(request):
     data = {'result': 'Error', 'message': "Something went wrong, please try again", "redirect": False}
     if request.method == "POST" and request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
         
-        cart = request.user.cart_customer # We will need a signal
+        cart = request.user.customer_user.cart_customer
         checkout_url = '/' # We will wire up the stripe API soon
 
         data.update({

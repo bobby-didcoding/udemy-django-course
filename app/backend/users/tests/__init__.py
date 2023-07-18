@@ -9,6 +9,12 @@ from users.tests.forms import (
     SignupFormTestCase,
     RequestPasswordFormTestCase
 )
+from users.tests.views import (
+    SignupTestCase,
+    LoginTestCase,
+    ForgottenPasswordTestCase,
+    LogoutViewTestCase
+)
 
 
 __all__ = [
@@ -17,5 +23,9 @@ __all__ = [
     CustomUserSignalTestCase,
     LoginFormTestCase,
     SignupFormTestCase,
-    RequestPasswordFormTestCase
+    RequestPasswordFormTestCase,
+    SignupTestCase,
+    LoginTestCase,
+    ForgottenPasswordTestCase,
+    LogoutViewTestCase
 ]

@@ -21,8 +21,9 @@ def manage_cart(request, product_id, action):
     # This is also where we handle stock.
     # """
     data = {'result': 'Error', 'message': "Something went wrong, please try again", "redirect": False}
+    
     if request.method == "POST" and request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
-
+        
         try:
             product = Product.objects.get(id = product_id)
         except Product.DoesNotExist:
