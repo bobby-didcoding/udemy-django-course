@@ -5,7 +5,9 @@ from ecommerce.tests.models import(
     PriceTestCase,
     ProductTestCase,
     CustomerTestCase,
-    CartTestCase
+    CartTestCase,
+    SessionItemTestCase,
+    SessionTestCase
 )
 
 
@@ -14,5 +16,7 @@ __all__ = [
     PriceTestCase,
     ProductTestCase,
     CustomerTestCase,
-    CartTestCase
+    CartTestCase,
+    SessionItemTestCase,
+    SessionTestCase
 ]
