@@ -17,6 +17,10 @@ from core.tests.forms import (
     GenericNewsLetterFormTestCase
 )
 
+from core.tests.views import (
+    HomeViewTestCase
+)
+
 
 __all__ = [
     BlogTestCase,
@@ -28,5 +32,6 @@ __all__ = [
     SkillTestCase,
     TestimonialTestCase,
     ContactFormTestCase,
-    GenericNewsLetterFormTestCase
+    GenericNewsLetterFormTestCase,
+    HomeViewTestCase
 ]
