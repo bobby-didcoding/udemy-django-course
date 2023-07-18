@@ -12,6 +12,11 @@ from core.tests.models import (
     TestimonialTestCase
 )
 
+from core.tests.forms import (
+    ContactFormTestCase,
+    GenericNewsLetterFormTestCase
+)
+
 
 __all__ = [
     BlogTestCase,
@@ -21,5 +26,7 @@ __all__ = [
     ContactTestCase,
     NewsLetterTestCase,
     SkillTestCase,
-    TestimonialTestCase
+    TestimonialTestCase,
+    ContactFormTestCase,
+    GenericNewsLetterFormTestCase
 ]
