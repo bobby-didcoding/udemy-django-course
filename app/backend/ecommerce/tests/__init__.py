@@ -5,17 +5,9 @@ from ecommerce.tests.models import(
     PriceTestCase,
     ProductTestCase,
     CustomerTestCase,
-    CartTestCase
-)
-
-from ecommerce.tests.views import (
-    CartViewTestCase,
-    ProductsViewTestCase,
-    ProductViewTestCase,
-    ManageCartViewTestCase,
-    SessionCreateViewTestCase,
-    SessionSuccessViewTestCase,
-    SessionCancelViewTestCase
+    CartTestCase,
+    SessionItemTestCase,
+    SessionTestCase
 )
 
 
@@ -25,11 +17,6 @@ __all__ = [
     ProductTestCase,
     CustomerTestCase,
     CartTestCase,
-    CartViewTestCase,
-    ProductViewTestCase,
-    ProductsViewTestCase,
-    ManageCartViewTestCase,
-    SessionCreateViewTestCase,
-    SessionSuccessViewTestCase,
-    SessionCancelViewTestCase
+    SessionItemTestCase,
+    SessionTestCase
 ]
