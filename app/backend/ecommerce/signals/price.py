@@ -11,13 +11,18 @@ from django.dispatch import receiver
 from django.conf import settings
 
 # --------------------------------------------------------------
+# Project imports
+# --------------------------------------------------------------
+from utils.decorators import suspendingreceiver
+
+# --------------------------------------------------------------
 # App imports
 # --------------------------------------------------------------
 from ecommerce.models import Price
 
 logger = logging.getLogger(__name__)
 
-@receiver(post_save, sender=Price, weak=False)
+@suspendingreceiver(post_save, sender=Price, weak=False)
 def create_price(sender, instance, created, **kwargs):
     if created:
         '''
