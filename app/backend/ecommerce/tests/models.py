@@ -19,6 +19,8 @@ from ecommerce.models import (
     Customer,
     Price,
     Product,
+    Session,
+    SessionItem
 )
 
 User = get_user_model()
@@ -41,6 +43,18 @@ class BaseEcommerceTest(TestCase, BaseTestCustomUser):
         
         self.cart.products.add(self.product)
         self.cart.save()
+
+        self.session_item = SessionItem.objects.create(
+            customer=self.customer,
+            product = self.product,
+            price = self.price
+        )
+
+        self.session = Session.objects.create(
+            customer = self.customer,
+        )
+        self.session.session_items.add(self.session_item)
+        self.session.save()
 
 
 class PriceTestCase(BaseEcommerceTest):
@@ -105,3 +119,29 @@ class CartTestCase(BaseEcommerceTest):
         self.assertTrue(product in obj.products.all(), True)
         self.assertTrue(obj.products.all().count(), 1)
 
+class SessionItemTestCase(BaseEcommerceTest):
+    """
+    Test suite for SessionItem
+    """
+    def test_session_item_creation(self):
+        obj = self.session_item
+        self.assertTrue(isinstance(obj, SessionItem))
+        self.assertEqual(obj.status, 1)
+        self.assertEqual(obj.price.amount, 10.0)
+
+
+class SessionTestCase(BaseEcommerceTest):
+    """
+    Test suite for Session
+    """
+    def test_session_creation(self):
+        obj = self.session
+        self.assertTrue(isinstance(obj, Session))
+        self.assertEqual(obj.status, 1)
+
+    def test_session_empty_cart_method(self):
+        obj = self.session
+        cart = self.cart
+        self.assertEqual(cart.products.all().count(), 1)
+        obj.empty_cart
+        self.assertEqual(cart.products.all().count(), 0)
