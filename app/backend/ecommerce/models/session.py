@@ -9,6 +9,7 @@ from decimal import *
 from django.utils.translation import gettext_lazy as _
 from django.db import models
 from django.conf import settings
+from django.contrib.sites.models import Site
 
 # --------------------------------------------------------------
 # Project imports
@@ -52,9 +53,31 @@ class Session(
     session_mode = EnumField(SessionMode, blank=True, null=True, verbose_name=_('session mode'), default=SessionMode.payment)
     session_status = EnumField(SessionStatus, blank=True, null=True, verbose_name=_('session status'), default=SessionStatus.open)
 
+
     @property
     def empty_cart(self):
         cart = self.customer.cart_customer
         for p in cart.products.all():
             cart.products.remove(p)
         cart.save()
+
+    def get_url(self):
+        site_id = settings.SITE_ID
+        current_site = Site.objects.get(id = site_id).domain
+        if settings.PRODUCTION:
+            protocol = "https://"
+        else:
+            protocol = "http://"
+        url = f'{protocol}{current_site}'
+        return url
+
+
+    def get_success_url(self):
+        url = self.get_url()
+        success_url = f'{url}/session-success/{self.id}/'
+        return success_url
+    
+    def get_cancelled_url(self):
+        url = self.get_url()
+        cancel_url = f'{url}/session-cancelled/{self.id}/'
+        return cancel_url
