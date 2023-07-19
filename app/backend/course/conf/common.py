@@ -17,6 +17,13 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
+SECRET_KEY = os.environ.get("SECRET_KEY")
+ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
+
+
+# Application definition
+RUN_SERVER_PORT = 8000
+
 # --------------------------------------------------------------
 # Installed apps
 # --------------------------------------------------------------
@@ -49,6 +56,23 @@ INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + APPS
 SITE_ID = 1
 # --------------------------------------------------------------
 # End Installed apps
+# --------------------------------------------------------------
+
+# --------------------------------------------------------------
+# DATABASE SETTINGS
+# --------------------------------------------------------------
+DATABASES = {
+    "default": {
+        "ENGINE": os.environ.get("DB_ENGINE", "django.db.backends.sqlite3"),
+        "NAME": os.environ.get("DB_NAME", BASE_DIR / "db.sqlite3"),
+        "USER": os.environ.get("DB_USER", "user"),
+        "PASSWORD": os.environ.get("DB_PASSWORD", "password"),
+        "HOST": os.environ.get("DB_HOST", "localhost"),
+        "PORT": os.environ.get("DB_PORT", "5432"),
+    }
+}
+# --------------------------------------------------------------
+# END DATABASE SETTINGS
 # --------------------------------------------------------------
 
 MIDDLEWARE = [
@@ -120,4 +144,49 @@ USE_TZ = True
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-AUTH_USER_MODEL = 'users.CustomUser'
+SUSPEND_SIGNALS = False
+
+# --------------------------------------------------------------
+# EMAIL SETTINGS
+# --------------------------------------------------------------
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = os.environ.get("EMAIL_HOST")
+EMAIL_PORT = os.environ.get("EMAIL_PORT")
+EMAIL_USE_TLS = os.environ.get("EMAIL_USE_TLS")
+if EMAIL_USE_TLS:
+    EMAIL_USE_TLS = True
+else:
+    EMAIL_USE_TLS = False
+EMAIL_HOST_USER = os.environ.get("DONOT_REPLY_EMAIL")
+DISPLAY_NAME = os.environ.get("EMAIL_DISPLAY_NAME")
+EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_PASSWORD")
+# --------------------------------------------------------------
+# END EMAIL SETTINGS
+# --------------------------------------------------------------
+
+
+# --------------------------------------------------------------
+# RECAPTCHA SETTINGS
+# --------------------------------------------------------------
+RECAPTCHA_PUBLIC_KEY = os.environ.get("RECAPTCHA_PUBLIC_KEY")
+RECAPTCHA_PRIVATE_KEY = os.environ.get("RECAPTCHA_PRIVATE_KEY")
+# --------------------------------------------------------------
+# END RECAPTCHA SETTINGS
+# --------------------------------------------------------------
+
+# --------------------------------------------------------------
+# COOKIE SETTINGS
+# --------------------------------------------------------------
+COOKIE_BOT = os.environ.get("COOKIE_BOT",None)
+# --------------------------------------------------------------
+# END COOKIE SETTINGS
+# --------------------------------------------------------------
+
+# --------------------------------------------------------------
+# STRIPE SETTINGS
+# --------------------------------------------------------------
+STRIPE_SECRET_KEY = os.environ.get("STRIPE_SECRET")
+STRIPE_PUBLISHABLE = os.environ.get("STRIPE_PUBLISHABLE")
+# --------------------------------------------------------------
+# END STRIPE SETTINGS
+# --------------------------------------------------------------
