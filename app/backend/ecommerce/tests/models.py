@@ -4,6 +4,8 @@
 from django.test.utils import override_settings
 from django.contrib.auth import get_user_model
 from django.test import TestCase
+from django.contrib.sites.models import Site
+from django.conf import settings
 
 # --------------------------------------------------------------
 # Project imports
@@ -20,7 +22,8 @@ from ecommerce.models import (
     Price,
     Product,
     Session,
-    SessionItem
+    SessionItem,
+    Invoice
 )
 
 User = get_user_model()
@@ -29,6 +32,8 @@ User = get_user_model()
 class BaseEcommerceTest(TestCase, BaseTestCustomUser):
 
     def setUp(self):
+
+        self.domain = Site.objects.first()
         self.user = self.get_test_active_user()
 
         self.customer = Customer.objects.create(user = self.user)
@@ -55,6 +60,21 @@ class BaseEcommerceTest(TestCase, BaseTestCustomUser):
         )
         self.session.session_items.add(self.session_item)
         self.session.save()
+
+        self.invoice = Invoice.objects.create(customer = self.customer)
+
+
+class InvoiceTestCase(BaseEcommerceTest):
+    """
+    Test suite for Invoice
+    """
+
+
+    def test_price_creation(self):
+        obj = self.invoice
+        self.assertTrue(isinstance(obj, Invoice))
+        self.assertEqual(obj.status, 1)
+
 
 
 class PriceTestCase(BaseEcommerceTest):
@@ -91,6 +111,10 @@ class ProductTestCase(BaseEcommerceTest):
     def test_product_get_absolute_url_method(self):
         obj = self.product
         self.assertEqual(obj.get_absolute_url(), '/product/test-product/')
+
+    def test_product_get_full_url_method(self):
+        obj = self.product
+        self.assertTrue(f'example.com/product/test-product/' in obj.get_full_url())
 
 
 class CustomerTestCase(BaseEcommerceTest):
@@ -145,3 +169,15 @@ class SessionTestCase(BaseEcommerceTest):
         self.assertEqual(cart.products.all().count(), 1)
         obj.empty_cart
         self.assertEqual(cart.products.all().count(), 0)
+
+    def test_session_get_url_method(self):
+        obj = self.session
+        self.assertTrue('example.com' in obj.get_url())
+
+    def test_session_get_success_url_method(self):
+        obj = self.session
+        self.assertTrue('example.com/session-success/' in obj.get_success_url())
+
+    def test_session_get_cancelled_url_method(self):
+        obj = self.session
+        self.assertTrue('example.com/session-cancelled/' in obj.get_cancelled_url())

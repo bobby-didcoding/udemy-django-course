@@ -8,6 +8,8 @@ import os
 # --------------------------------------------------------------
 from django.utils.translation import gettext_lazy as _
 from django.db import models
+from django.conf import settings
+from django.contrib.sites.models import Site
 
 
 
@@ -44,3 +46,13 @@ class Product(
     
     def get_absolute_url(self):
         return f'/product/{self.slug}/'
+    
+    def get_full_url(self):
+        site_id = settings.SITE_ID
+        current_site = Site.objects.get(id = site_id).domain
+        if settings.PRODUCTION:
+            protocol = "https://"
+        else:
+            protocol = "http://"
+        url = f'{protocol}{current_site}{self.get_absolute_url()}'
+        return url
