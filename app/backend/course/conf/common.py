@@ -41,6 +41,8 @@ DJANGO_APPS = [
 
 THIRD_PARTY_APPS = [
     'debug_toolbar',
+    '',
+    ''
 ]
 
 APPS = [
@@ -139,7 +141,7 @@ USE_TZ = True
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
+SUSPEND_SIGNALS = False
 
 # --------------------------------------------------------------
 # EMAIL SETTINGS

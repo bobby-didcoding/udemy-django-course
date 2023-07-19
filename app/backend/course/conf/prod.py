@@ -5,6 +5,9 @@ import os
 import socket
 load_dotenv()
 
+import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
+
 PRODUCTION = 1
 DEBUG = 0
 
@@ -32,4 +35,17 @@ STATIC_URL = '{}/{}/'.format(AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
 MEDIA_URL = '{}/{}/'.format(AWS_S3_CUSTOM_DOMAIN, AWS_MEDIA_LOCATION)
 # --------------------------------------------------------------
 # END STATICFILES SETTINGS
+# --------------------------------------------------------------
+
+# --------------------------------------------------------------
+# START SENTRY SETTINGS
+# --------------------------------------------------------------
+sentry_sdk.init(
+    dsn=os.environ.get('SENTRY_DNS'),
+    integrations=[DjangoIntegration()],
+    traces_sample_rate=1.0,
+    send_default_pii=True,
+)
+# --------------------------------------------------------------
+# END SENTRY SETTINGS
 # --------------------------------------------------------------

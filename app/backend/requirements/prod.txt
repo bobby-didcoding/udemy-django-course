@@ -1,1 +1,9 @@
 -r base.txt
+
+
+s3transfer
+boto3
+botocore
+django-storages
+gunicorn
+sentry-sdk
