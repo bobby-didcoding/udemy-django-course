@@ -5,31 +5,8 @@ import os
 import socket
 load_dotenv()
 
-SECRET_KEY = os.environ.get("SECRET_KEY")
-ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
-PRODUCTION = 0
-DEBUG = 1
-
-# Application definition
-RUN_SERVER_PORT = 8000
-
-# --------------------------------------------------------------
-# DATABASE SETTINGS
-# --------------------------------------------------------------
-DATABASES = {
-    "default": {
-        "ENGINE": os.environ.get("DB_ENGINE", "django.db.backends.sqlite3"),
-        "NAME": os.environ.get("DB_NAME", BASE_DIR / "db.sqlite3"),
-        "USER": os.environ.get("DB_USER", "user"),
-        "PASSWORD": os.environ.get("DB_PASSWORD", "password"),
-        "HOST": os.environ.get("DB_HOST", "localhost"),
-        "PORT": os.environ.get("DB_PORT", "5432"),
-    }
-}
-# --------------------------------------------------------------
-# END DATABASE SETTINGS
-# --------------------------------------------------------------
-
+PRODUCTION = 1
+DEBUG = 0
 
 # --------------------------------------------------------------
 # STATICFILES SETTINGS

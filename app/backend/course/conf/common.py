@@ -17,6 +17,13 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
+SECRET_KEY = os.environ.get("SECRET_KEY")
+ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
+
+
+# Application definition
+RUN_SERVER_PORT = 8000
+
 # --------------------------------------------------------------
 # Installed apps
 # --------------------------------------------------------------
@@ -46,6 +53,23 @@ SITE_ID = 1
 # End Installed apps
 # --------------------------------------------------------------
 
+# --------------------------------------------------------------
+# DATABASE SETTINGS
+# --------------------------------------------------------------
+DATABASES = {
+    "default": {
+        "ENGINE": os.environ.get("DB_ENGINE", "django.db.backends.sqlite3"),
+        "NAME": os.environ.get("DB_NAME", BASE_DIR / "db.sqlite3"),
+        "USER": os.environ.get("DB_USER", "user"),
+        "PASSWORD": os.environ.get("DB_PASSWORD", "password"),
+        "HOST": os.environ.get("DB_HOST", "localhost"),
+        "PORT": os.environ.get("DB_PORT", "5432"),
+    }
+}
+# --------------------------------------------------------------
+# END DATABASE SETTINGS
+# --------------------------------------------------------------
+
 MIDDLEWARE = [
     'debug_toolbar.middleware.DebugToolbarMiddleware',#needed for django debug toolbar
     'django.middleware.security.SecurityMiddleware',
@@ -72,6 +96,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                #PROJECT CONTEXT
+                'course.context_processor.project_context',
             ],
         },
     },
@@ -112,3 +138,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+SUSPEND_SIGNALS = False
