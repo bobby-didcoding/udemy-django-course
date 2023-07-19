@@ -6,26 +6,34 @@ import logging
 # --------------------------------------------------------------
 # Django imports
 # --------------------------------------------------------------
-from django.db.models.signals import post_save
-from django.dispatch import receiver
-from django.conf import settings
+from django.db.models.signals import pre_save
 
 # --------------------------------------------------------------
 # Project imports
 # --------------------------------------------------------------
 from utils.decorators import suspendingreceiver
+from apis.stripe import StripeProduct, StripePrice
 
 # --------------------------------------------------------------
 # App imports
 # --------------------------------------------------------------
-from ecommerce.models import Product
+from ecommerce.models import Product, Price
 
 logger = logging.getLogger(__name__)
 
-@suspendingreceiver(post_save, sender=Product, weak=False)
-def create_product(sender, instance, created, **kwargs):
-    if created:
-        '''
-        Create a stripe product
-        '''
-        pass
+@suspendingreceiver(pre_save, sender=Product, weak=False)
+def manage_product(sender, instance, **kwargs):
+    if not instance.price:
+        raise Exception("Please add price")
+    try:
+        current = instance
+        previous = sender.objects.get(id = instance.id)
+
+        if previous.title != current.title:
+            StripeProduct(current).put()
+
+        if previous.price != current.price:
+            raise Exception("You can not change the price once set, please create a new product")
+    except (sender.DoesNotExist,):
+        StripeProduct(current).post()
+    
