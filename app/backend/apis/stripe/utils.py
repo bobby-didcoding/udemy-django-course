@@ -1,8 +1,6 @@
 # --------------------------------------------------------------
 # Python imports
 # --------------------------------------------------------------
-from dateutil.relativedelta import *
-from datetime import datetime
 import logging
 
 # --------------------------------------------------------------
@@ -10,12 +8,6 @@ import logging
 # --------------------------------------------------------------
 from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
-
-
-# --------------------------------------------------------------
-# Project imports
-# --------------------------------------------------------------
-from utils.mixins import convert_datetime_to_aware
 
 # --------------------------------------------------------------
 # 3rd party imports
@@ -36,10 +28,4 @@ def print_webhook_event(obj, action):
             logger.info(print_text)
     except (TypeError, AttributeError):
         pass
-
-def convert_naive_to_aware(date):
-    if date:
-        # date = convert_datetime_to_aware(datetime.utcfromtimestamp(date / 1e3))
-        date = convert_datetime_to_aware(datetime.fromtimestamp(date))
-    return date
 

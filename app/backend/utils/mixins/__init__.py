@@ -4,9 +4,6 @@
 import six
 import random
 import string
-from django.utils import timezone
-from datetime import datetime, timedelta
-import calendar
 
 # --------------------------------------------------------------
 # Django imports
@@ -116,9 +113,3 @@ class AccountActivationTokenGenerator(PasswordResetTokenGenerator):
             six.text_type(user.pk) + six.text_type(timestamp) +
             six.text_type(user.is_active)
         )
-    
-def aware_now():
-	return timezone.make_aware(datetime.now())
-
-def convert_datetime_to_aware(date):
-	return timezone.make_aware(date)

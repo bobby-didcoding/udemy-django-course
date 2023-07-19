@@ -1,7 +1,6 @@
 # --------------------------------------------------------------
 # Python imports
 # --------------------------------------------------------------
-from dateutil.relativedelta import *
 import json
 import logging
 

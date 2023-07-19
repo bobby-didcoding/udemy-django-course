@@ -17,8 +17,8 @@ from ecommerce.models import Customer, Cart
 # --------------------------------------------------------------
 from ecommerce.models import Product, Price, Session
 
-
-class EcommerceViewTestBase(BaseTestCustomUser):
+@override_settings(SUSPEND_SIGNALS=True)
+class EcommerceViewTestBase(BaseTestCustomUser, TestCase):
 
     def setUp(self):
 
@@ -45,7 +45,7 @@ class EcommerceViewTestBase(BaseTestCustomUser):
         self.client = Client()
         
 
-class CartViewTestCase(EcommerceViewTestBase, TestCase):
+class CartViewTestCase(EcommerceViewTestBase):
     """
     Test suite for CartView
     """
@@ -68,8 +68,8 @@ class CartViewTestCase(EcommerceViewTestBase, TestCase):
         
         self.assertEqual(response.status_code, 405)
 
-@override_settings(SUSPEND_SIGNALS=True)
-class ManageCartViewTestCase(EcommerceViewTestBase, TestCase):
+
+class ManageCartViewTestCase(EcommerceViewTestBase):
     """
     Test suite for ManageCartView
     """
@@ -123,8 +123,7 @@ class ManageCartViewTestCase(EcommerceViewTestBase, TestCase):
         self.assertEqual(cart.products.all().count(),0)
 
 
-@override_settings(SUSPEND_SIGNALS=True)
-class SessionCreateViewTestCase(EcommerceViewTestBase, TestCase):
+class SessionCreateViewTestCase(EcommerceViewTestBase):
     """
     Test suite for SessionCreateView
     """
@@ -157,8 +156,7 @@ class SessionCreateViewTestCase(EcommerceViewTestBase, TestCase):
         response = self.client.post(f"/session-create/", HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         self.assertEqual(response.status_code, 200)
 
-@override_settings(SUSPEND_SIGNALS=True)
-class SessionSuccessViewTestCase(EcommerceViewTestBase, TestCase):
+class SessionSuccessViewTestCase(EcommerceViewTestBase):
     """
     Test suite for SessionSuccessView
     """
@@ -191,8 +189,7 @@ class SessionSuccessViewTestCase(EcommerceViewTestBase, TestCase):
         self.assertEqual(response.status_code, 405)
 
 
-@override_settings(SUSPEND_SIGNALS=True)
-class SessionCancelViewTestCase(EcommerceViewTestBase, TestCase):
+class SessionCancelViewTestCase(EcommerceViewTestBase):
     """
     Test suite for SessionCancelView
     """
@@ -225,7 +222,7 @@ class SessionCancelViewTestCase(EcommerceViewTestBase, TestCase):
         self.assertEqual(response.status_code, 405)
 
 
-class ProductsViewTestCase(EcommerceViewTestBase, TestCase):
+class ProductsViewTestCase(EcommerceViewTestBase):
     """
     Test suite for Products
     """
@@ -255,7 +252,7 @@ class ProductsViewTestCase(EcommerceViewTestBase, TestCase):
         self.assertEqual(response.status_code, 405)
 
 
-class ProductViewTestCase(EcommerceViewTestBase, TestCase):
+class ProductViewTestCase(EcommerceViewTestBase):
     """
     Test suite for Product
     """

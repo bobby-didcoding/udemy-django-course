@@ -6,12 +6,6 @@ from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 
 
-# --------------------------------------------------------------
-# App imports
-# --------------------------------------------------------------
-from ecommerce.models import Product, InvoiceItem
-
-
 class CartView(generic.TemplateView):
 	"""
     TemplateView to display all items in a users cart.

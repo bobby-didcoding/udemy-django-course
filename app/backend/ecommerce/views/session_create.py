@@ -3,6 +3,7 @@
 # --------------------------------------------------------------
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
+from django.conf import settings
 
 # --------------------------------------------------------------
 # Project imports
@@ -19,9 +20,11 @@ def session_create(request):
     if request.method == "POST" and request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
         
         cart = request.user.customer_user.cart_customer
-        obj = StripeSession(cart.create_session()).post()
-
-        checkout_url = obj["url"]
+        if not settings.SUSPEND_SIGNALS:
+            obj = StripeSession(cart.create_session()).post()
+            checkout_url = obj["url"]
+        else:
+            checkout_url = "/"
 
         data.update({
             "redirect": checkout_url,
