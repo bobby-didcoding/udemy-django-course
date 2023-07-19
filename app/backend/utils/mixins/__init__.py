@@ -18,7 +18,6 @@ from django.contrib.auth.tokens import PasswordResetTokenGenerator
 # --------------------------------------------------------------
 import requests
 
-
 def get_random_string(length):
     letters = string.ascii_lowercase
     result_str = ''.join(random.choice(letters) for i in range(length))
