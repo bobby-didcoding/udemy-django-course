@@ -2,12 +2,12 @@
  var temp_button_text;
  function CustomFormSubmitPost(e) {
      var el = $(e);
-     temp_button_text = el.text()
-     el.attr('disabled', 'disabled').text("").append('<class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>Loading...');
+     temp_button_text = el.attr("value")
+     el.attr('disabled', 'disabled').attr("value", "Loading...");
  };
  function CustomFormSubmitResponse(e) {
      var el = $(e);
-     el.removeAttr('disabled').text(temp_button_text);
+     el.removeAttr('disabled').attr("value", temp_button_text);
  };
  
  function getSubmitButton(form){
