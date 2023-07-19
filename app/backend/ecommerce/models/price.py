@@ -15,3 +15,9 @@ class Price(
     Model):
     
     interval_count = models.IntegerField(default=1, null=True, blank=True)
+
+    amount = models.FloatField(default=1.0)
+
+    @property
+    def stripe_amount(self):
+        return int(self.amount * 100)

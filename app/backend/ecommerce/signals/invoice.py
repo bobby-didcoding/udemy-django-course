@@ -7,7 +7,6 @@ import logging
 # Django imports
 # --------------------------------------------------------------
 from django.db.models.signals import post_save
-from django.dispatch import receiver
 from django.conf import settings
 
 # --------------------------------------------------------------
@@ -18,14 +17,15 @@ from utils.decorators import suspendingreceiver
 # --------------------------------------------------------------
 # App imports
 # --------------------------------------------------------------
-from ecommerce.models import Product
+from ecommerce.models import Invoice
+
 
 logger = logging.getLogger(__name__)
 
-@suspendingreceiver(post_save, sender=Product, weak=False)
-def create_product(sender, instance, created, **kwargs):
+@suspendingreceiver(post_save, sender=Invoice, weak=False)
+def create_invoice(sender, instance, created, **kwargs):
     if created:
         '''
-        Create a stripe product
+        Create a stripe invoice
         '''
         pass
