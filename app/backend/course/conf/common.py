@@ -40,9 +40,9 @@ DJANGO_APPS = [
 
 
 THIRD_PARTY_APPS = [
+    'ckeditor',
+    'django_extensions',
     'debug_toolbar',
-    '',
-    ''
 ]
 
 APPS = [
