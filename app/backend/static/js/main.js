@@ -27,6 +27,19 @@
          }
      })
  }
+
+ function createSession(url){
+    $.ajax({
+        url: url,
+        method: "POST",
+        success: function(json){
+            ShowAlert(json["result"], json["message"], json["result"].toLowerCase(), json["redirect"]);
+        },
+        error: function(xhr){
+            console.log(xhr.status + ": " + xhr.responseText);
+        }
+    })
+}
  
  function ajaxForm(form, data){
      var submit_button = getSubmitButton(form)
