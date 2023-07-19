@@ -11,3 +11,4 @@ export EMAIL_USE_TLS=1
 export EMAIL_DISPLAY_NAME=*
 export STRIPE_PUBLISHABLE=*
 export STRIPE_SECRET=*
+export STRIPE_DEVICE=course_local
