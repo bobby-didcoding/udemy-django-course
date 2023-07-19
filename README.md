@@ -27,7 +27,11 @@ This repo has been put together as a starting point for a Udemy Django course.
 We will need to add a directories to our project to store logs.
 
 ```
-echo > .env
+#Unix and MacOS
+cp env_template .env
+
+#windows
+copy env_template .env
 ```
 
 ***
