@@ -74,10 +74,10 @@ class Session(
 
     def get_success_url(self):
         url = self.get_url()
-        success_url = f'{url}/session-success/{self.session.id}/'
+        success_url = f'{url}/session-success/{self.id}/'
         return success_url
     
     def get_cancelled_url(self):
         url = self.get_url()
-        cancel_url = f'{url}/session-cancelled/{self.session.id}/'
+        cancel_url = f'{url}/session-cancelled/{self.id}/'
         return cancel_url
