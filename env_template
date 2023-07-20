@@ -1,5 +1,11 @@
 export SECRET_KEY="course-key"
 export DJANGO_ALLOWED_HOSTS=* localhost 127.0.0.1 [::1]
+export DB_USER=user
+export DB_PASSWORD=password
+export DB_HOST=localhost
+// export DB_NAME=
+export DB_PORT=5432
+export DB_ENGINE=django.db.backends.sqlite3
 export RECAPTCHA_PUBLIC_KEY=*
 export RECAPTCHA_PRIVATE_KEY=*
 export SUPPORT_EMAIL=*
@@ -13,3 +19,5 @@ export STRIPE_PUBLISHABLE=*
 export STRIPE_SECRET=*
 export DOCKER_CONTAINER_EMAIL=*
 export DOCKER_CONTAINER_PASSWORD=*
+export CELERY_BROKER=redis://redis:6379
+export CELERY_BACKEND=django-db
