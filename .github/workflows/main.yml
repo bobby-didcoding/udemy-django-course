@@ -5,14 +5,12 @@ on: [push]
 env:
     STAGE_REDIS_IMAGE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/stage_redis
     STAGE_NGINX_IMAGE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/stage_nginx
-    STAGE_CERTBOT_IMAGE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/stage_certbot
     STAGE_APP_IMAGE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/stage_app
     STAGE_CELERY_IMAGE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/stage_celery
     STAGE_BEAT_IMAGE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/stage_beat
     STAGE_DB_IMAGE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/stage_db
     PROD_REDIS_IMAGE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/prod_redis
     PROD_NGINX_IMAGE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/prod_nginx
-    PROD_CERTBOT_IMAGE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/prod_certbot
     PROD_APP_IMAGE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/prod_app
     PROD_CELERY_IMAGE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/prod_celery
     PROD_BEAT_IMAGE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/prod_beat
@@ -60,12 +58,12 @@ jobs:
                 echo STRIPE_PUBLISHABLE=${{ secrets.STAGE_STRIPE_PUBLISHABLE }} >> .env
                 echo STRIPE_SECRET=${{ secrets.STAGE_STRIPE_SECRET }} >> .env
                 echo COOKIE_BOT=${{ secrets.STAGE_COOKIE_BOT }} >> .env
+                echo REDIS_PASSWORD=${{ secrets.STAGE_REDIS_PASSWORD }} >> .env
 
           - name: Set environment variables
             run: |
                 echo "STAGE_REDIS_IMAGE=$(echo ${{env.STAGE_REDIS_IMAGE}} )" >> $GITHUB_ENV
                 echo "STAGE_NGINX_IMAGE=$(echo ${{env.STAGE_NGINX_IMAGE}} )" >> $GITHUB_ENV
-                echo "STAGE_CERTBOT_IMAGE=$(echo ${{env.STAGE_CERTBOT_IMAGE}} )" >> $GITHUB_ENV
                 echo "STAGE_APP_IMAGE=$(echo ${{env.STAGE_APP_IMAGE}} )" >> $GITHUB_ENV
                 echo "STAGE_CELERY_IMAGE=$(echo ${{env.STAGE_CELERY_IMAGE}} )" >> $GITHUB_ENV
                 echo "STAGE_BEAT_IMAGE=$(echo ${{env.STAGE_BEAT_IMAGE}} )" >> $GITHUB_ENV
@@ -80,7 +78,6 @@ jobs:
             run: |
                 docker pull ${{ env.STAGE_REDIS_IMAGE }} || true
                 docker pull ${{ env.STAGE_NGINX_IMAGE }} || true
-                docker pull ${{ env.STAGE_CERTBOT_IMAGE }} || true
                 docker pull ${{ env.STAGE_DB_IMAGE }} || true
                 docker pull ${{ env.STAGE_APP_IMAGE }} || true
                 docker pull ${{ env.STAGE_CELERY_IMAGE }} || true
@@ -92,7 +89,6 @@ jobs:
             run: |
                 docker push ${{ env.STAGE_REDIS_IMAGE }}
                 docker push ${{ env.STAGE_NGINX_IMAGE }}
-                docker push ${{ env.STAGE_CERTBOT_IMAGE }}
                 docker push ${{ env.STAGE_APP_IMAGE }}
                 docker push ${{ env.STAGE_CELERY_IMAGE }}
                 docker push ${{ env.STAGE_BEAT_IMAGE }}
@@ -138,13 +134,13 @@ jobs:
               echo STRIPE_PUBLISHABLE=${{ secrets.PROD_STRIPE_PUBLISHABLE }} >> .env
               echo STRIPE_SECRET=${{ secrets.PROD_STRIPE_SECRET }} >> .env
               echo COOKIE_BOT=${{ secrets.PROD_COOKIE_BOT }} >> .env
+              echo REDIS_PASSWORD=${{ secrets.PROD_REDIS_PASSWORD }} >> .env
 
         - name: Set environment variables
           run: |
 
               echo "PROD_REDIS_IMAGE=$(echo ${{env.PROD_REDIS_IMAGE}} )" >> $GITHUB_ENV
               echo "PROD_NGINX_IMAGE=$(echo ${{env.PROD_NGINX_IMAGE}} )" >> $GITHUB_ENV
-              echo "PROD_CERTBOT_IMAGE=$(echo ${{env.PROD_CERTBOT_IMAGE}} )" >> $GITHUB_ENV
               echo "PROD_APP_IMAGE=$(echo ${{env.PROD_APP_IMAGE}} )" >> $GITHUB_ENV
               echo "PROD_CELERY_IMAGE=$(echo ${{env.PROD_CELERY_IMAGE}} )" >> $GITHUB_ENV
               echo "PROD_BEAT_IMAGE=$(echo ${{env.PROD_BEAT_IMAGE}} )" >> $GITHUB_ENV
@@ -158,7 +154,6 @@ jobs:
           run: |
               docker pull ${{ env.PROD_REDIS_IMAGE }} || true
               docker pull ${{ env.PROD_NGINX_IMAGE }} || true
-              docker pull ${{ env.PROD_CERTBOT_IMAGE }} || true
               docker pull ${{ env.PROD_DB_IMAGE }} || true
               docker pull ${{ env.PROD_APP_IMAGE }} || true
               docker pull ${{ env.PROD_CELERY_IMAGE }} || true
@@ -171,7 +166,6 @@ jobs:
           run: |
               docker push ${{ env.PROD_REDIS_IMAGE }}
               docker push ${{ env.PROD_NGINX_IMAGE }}
-              docker push ${{ env.PROD_CERTBOT_IMAGE }}
               docker push ${{ env.PROD_APP_IMAGE }}
               docker push ${{ env.PROD_CELERY_IMAGE }}
               docker push ${{ env.PROD_BEAT_IMAGE }}
@@ -219,10 +213,10 @@ jobs:
                 echo STRIPE_PUBLISHABLE=${{ secrets.STAGE_STRIPE_PUBLISHABLE }} >> .env
                 echo STRIPE_SECRET=${{ secrets.STAGE_STRIPE_SECRET }} >> .env
                 echo COOKIE_BOT=${{ secrets.STAGE_COOKIE_BOT }} >> .env
+                echo REDIS_PASSWORD=${{ secrets.STAGE_REDIS_PASSWORD }} >> .env
 
                 echo REDIS_IMAGE=${{ env.STAGE_REDIS_IMAGE }} >> .env
                 echo NGINX_IMAGE=${{ env.STAGE_NGINX_IMAGE }} >> .env
-                echo CERTBOT_IMAGE=${{ env.STAGE_CERTBOT_IMAGE }} >> .env
                 echo APP_IMAGE=${{ env.STAGE_APP_IMAGE }} >> .env
                 echo CELERY_IMAGE=${{ env.STAGE_CELERY_IMAGE }} >> .env
                 echo BEAT_IMAGE=${{ env.STAGE_BEAT_IMAGE }} >> .env
@@ -241,7 +235,7 @@ jobs:
             env:
                 SSH_AUTH_SOCK: /tmp/ssh_agent.sock
             run: |
-                scp  -o StrictHostKeyChecking=no -r ./.env ./app/backend ./app/nginx ./app/redis-conf ./docker-compose.stage.yml root@${{ secrets.STAGE_IP_ADDRESS }}:/home/course
+                scp  -o StrictHostKeyChecking=no -r ./.env ./app/backend ./app/nginx ./docker-compose.stage.yml root@${{ secrets.STAGE_IP_ADDRESS }}:/home/course
                 ssh -o StrictHostKeyChecking=no root@${{ secrets.STAGE_IP_ADDRESS }} << 'ENDSSH'
                     cd /home/course
                     mv docker-compose.stage.yml docker-compose.yml
@@ -301,10 +295,10 @@ jobs:
                 echo STRIPE_PUBLISHABLE=${{ secrets.PROD_STRIPE_PUBLISHABLE }} >> .env
                 echo STRIPE_SECRET=${{ secrets.PROD_STRIPE_SECRET }} >> .env
                 echo COOKIE_BOT=${{ secrets.PROD_COOKIE_BOT }} >> .env
+                echo REDIS_PASSWORD=${{ secrets.PROD_REDIS_PASSWORD }} >> .env
 
                 echo REDIS_IMAGE=${{ env.PROD_REDIS_IMAGE }} >> .env
                 echo NGINX_IMAGE=${{ env.PROD_NGINX_IMAGE }} >> .env
-                echo CERTBOT_IMAGE=${{ env.PROD_CERTBOT_IMAGE }} >> .env
                 echo APP_IMAGE=${{ env.PROD_APP_IMAGE }} >> .env
                 echo CELERY_IMAGE=${{ env.PROD_CELERY_IMAGE }} >> .env
                 echo BEAT_IMAGE=${{ env.PROD_BEAT_IMAGE }} >> .env
@@ -322,7 +316,7 @@ jobs:
             env:
                 SSH_AUTH_SOCK: /tmp/ssh_agent.sock
             run: |
-                scp  -o StrictHostKeyChecking=no -r ./.env ./app/backend ./app/nginx ./app/redis-conf ./app/data  ./docker-compose.prod.yml root@${{ secrets.PROD_IP_ADDRESS }}:/home/course
+                scp  -o StrictHostKeyChecking=no -r ./.env ./app/backend ./app/nginx ./docker-compose.prod.yml root@${{ secrets.PROD_IP_ADDRESS }}:/home/course
                 ssh -o StrictHostKeyChecking=no root@${{ secrets.PROD_IP_ADDRESS }} << 'ENDSSH'
                     cd /home/course
                     mv docker-compose.prod.yml docker-compose.yml

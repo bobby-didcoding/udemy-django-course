@@ -1,0 +1,107 @@
+version: '3'
+
+services:
+    
+    db:
+        image: "${STAGE_DB_IMAGE}"
+        restart: unless-stopped
+        environment:
+            - POSTGRES_USER=${DB_USER}
+            - POSTGRES_PASSWORD=${DB_PASSWORD}
+            - POSTGRES_DB=${DB_NAME}
+            - POSTGRES_PORT= ${DB_PORT}
+        container_name: db
+        networks:
+            - main_course_network
+
+
+    redis:
+        image: "${STAGE_REDIS_IMAGE}"
+        restart: unless-stopped
+        container_name: redis
+        command: >
+            --appendonly yes
+            --loglevel notice
+            --replica-read-only no
+            --bind 0.0.0.0
+            --requirepass ${REDIS_PASSWORD}
+        expose:
+            - 6379
+        ports:
+            - "6379:6379"
+        networks:
+            - main_course_network
+
+
+    app:
+        image: "${STAGE_APP_IMAGE}"
+        restart: unless-stopped
+        command: gunicorn --env DJANGO_SETTINGS_MODULE=course.conf.stage course.wsgi:application --bind 0.0.0.0:8000
+        ports:
+            - 8000:8000
+        volumes:
+            - ./backend:/home/app/backend
+        env_file:
+            - .env
+        depends_on:
+            - db
+        networks:
+            - main_course_network
+        container_name: app
+
+      
+    celery:
+        restart: unless-stopped
+        image: "${STAGE_CELERY_IMAGE}"
+        command: celery -A course worker --loglevel=info --logfile=logs/celery.log
+        env_file:
+            - .env
+        volumes:
+            - ./backend:/home/app/backend
+        depends_on:
+            - db
+            - redis
+            - app
+        networks:
+            - main_course_network
+        container_name: worker
+
+   
+    beat:
+        restart: unless-stopped
+        image: "${STAGE_BEAT_IMAGE}"
+        command: celery -A course beat -l info
+        env_file:
+            - .env
+        volumes:
+            - ./backend:/home/app/backend
+        depends_on:
+            - db
+            - redis
+            - app
+        networks:
+            - main_course_network
+        container_name: beat
+
+    nginx:
+        container_name: nginx
+        restart: unless-stopped
+        image: "${STAGE_NGINX_IMAGE}"
+        ports:
+            - "80:80"
+            - "443:443"
+        volumes:
+            - ./nginx/stage:/etc/nginx/conf.d
+            - ./cert.pem:/etc/ssl/cert.pem
+            - ./key.pem:/etc/ssl/key.pem
+        command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
+        networks:
+            - main_course_network
+        depends_on:
+            - app
+    
+
+
+networks:
+    main_course_network:
+        driver: bridge
