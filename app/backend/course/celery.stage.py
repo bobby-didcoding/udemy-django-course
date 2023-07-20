@@ -21,10 +21,10 @@ app = Celery('course')
 app.config_from_object('django.conf:settings', namespace='CELERY')
  
 app.conf.beat_schedule = {
-    # "some_task": {
-    #     "task": "tasks.tasks.some_task",
-    #     "schedule": timedelta(minutes=5),
-    # },
+    "send_account_summary_to_support": {
+        "task": "tasks.tasks.send_account_summary_to_support",
+        "schedule": timedelta(hours=24),
+    },
 }
  
 app.autodiscover_tasks()

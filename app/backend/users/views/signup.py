@@ -26,6 +26,7 @@ from utils.mixins import (
     recaptcha_form_submission,
     AccountActivationTokenGenerator
 	)
+from tasks.tasks import create_email
 
 
 class SignUpView(AjaxFormMixin, generic.FormView):
@@ -55,40 +56,16 @@ class SignUpView(AjaxFormMixin, generic.FormView):
             make_token = token.make_token(user)
             url_safe = urlsafe_base64_encode(force_bytes(user.pk))
 
-            #construct an activation email using bespoke email template
-            site_id = settings.SITE_ID
-            current_site = Site.objects.get(id = site_id).domain
-            if settings.PRODUCTION:
-                protocol = "https://"
-            else:
-                protocol = "http://"
-            context = {
+            kwargs = {
+                "user_id": user.id,
+                "subject": 'Course - Activate your Account!',
+                "context":{
                     'token': make_token,
                     'url_safe': url_safe,
-                    'domain':f'{protocol}{current_site}',
-                    'support_email':settings.EMAIL_HOST_USER
-                }
-
-            html_content = render_to_string('users/emails/activation-email.html', context ) # render with dynamic value
-            text_content = strip_tags(html_content) # Strip the html tag. So people can see the pure text at least.
-        
-            with get_connection(
-                    host= settings.EMAIL_HOST,
-                    port= settings.EMAIL_PORT,
-                    username=settings.EMAIL_HOST_USER,
-                    password=settings.EMAIL_HOST_PASSWORD,
-                    use_tls=settings.EMAIL_USE_TLS,
-                ) as connection:
-                    msg = EmailMultiAlternatives(
-                        'Activation email',
-                        text_content,
-                        f'{settings.DISPLAY_NAME} <{settings.EMAIL_HOST_USER}>',
-                        [user.email],
-                        cc=[],
-                        bcc=[],
-                        connection=connection)
-                    msg.attach_alternative(html_content, "text/html")
-                    msg.send()                 
+                },
+                "template": "users/emails/activation-email.html",
+            }
+            create_email.delay(**kwargs)               
 
             data.update({
                  "result": "Success",
