@@ -163,6 +163,7 @@ else:
 EMAIL_HOST_USER = os.environ.get("DONOT_REPLY_EMAIL")
 DISPLAY_NAME = os.environ.get("EMAIL_DISPLAY_NAME")
 EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_PASSWORD")
+EMAIL_SUPPORT_EMAIL = os.environ.get("SUPPORT_EMAIL")
 # --------------------------------------------------------------
 # END EMAIL SETTINGS
 # --------------------------------------------------------------
