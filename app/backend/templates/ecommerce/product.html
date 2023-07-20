@@ -87,7 +87,7 @@
               {{object.body|safe}}
               
               {% if request.user.is_authenticated %}
-              <a href="#" class="btn btnPrimary">Add to cart</a>
+              <a href="javacript:void(0)" onclick="manageCart('/manage-cart/{{object.id}}/add/')" class="btn btnPrimary">Add to cart</a>
               {% else %}
               <p>Please <a href="{% url 'users:signup' %}">Sign-up</a>/<a href="{% url 'users:login' %}">Login</a> to add to cart</p>
               {% endif %}
