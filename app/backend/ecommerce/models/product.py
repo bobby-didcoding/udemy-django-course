@@ -41,7 +41,7 @@ class Product(
     price = models.ForeignKey(Price, blank=True, null=True, on_delete=models.SET_NULL, related_name="product_price")
     image = models.ImageField(_('image'),upload_to=product_directory_path, default="default_image.jpg")
 
-    def __Str__(self):
+    def __str__(self):
         return f'{self.title}'
     
     def get_absolute_url(self):

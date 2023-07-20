@@ -196,7 +196,7 @@
                 <ul class="portfolioOption">
                 <li><span class="dateLbl">{{object.created}}</span></li>
                 </ul>
-                <p>{{object.description}}</p>
+                <p>{{object.description|safe}}</p>
             </div>
             </div>
         </div>
@@ -262,7 +262,7 @@
             <ul class="cardOptionCol">
             <li>{{object.created}}</li>
             </ul>
-            <p>{{object.description}}</p>
+            <p>{{object.description|safe}}</p>
         </div>
         </div>
         {% endif %}
