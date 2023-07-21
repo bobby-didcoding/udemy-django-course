@@ -40,7 +40,7 @@ services:
         ports:
             - 8000:8000
         volumes:
-            - ./backend:/home/app/backend
+            - ./backend:/code/backend
         env_file:
             - .env
         depends_on:
@@ -57,7 +57,7 @@ services:
         env_file:
             - .env
         volumes:
-            - ./backend:/home/app/backend
+            - ./backend:/code/backend
         depends_on:
             - db
             - redis
@@ -74,7 +74,7 @@ services:
         env_file:
             - .env
         volumes:
-            - ./backend:/home/app/backend
+            - ./backend:/code/backend
         depends_on:
             - db
             - redis
