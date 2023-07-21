@@ -36,7 +36,11 @@ services:
     app:
         image: "${APP_IMAGE}"
         restart: unless-stopped
-        command: gunicorn --env DJANGO_SETTINGS_MODULE=course.conf.stage course.wsgi:application --bind 0.0.0.0:8000
+        command: >
+            bash -c "python manage.py makemigrations
+            && python manage.py migrate
+            && python manage.py test
+            && gunicorn --env DJANGO_SETTINGS_MODULE=course.conf.stage course.wsgi.stage:application --bind 0.0.0.0:8000"
         ports:
             - 8000:8000
         volumes:
