@@ -50,7 +50,7 @@ jobs:
                 echo AWS_ACCESS_KEY_ID=${{ secrets.STAGE_AWS_ACCESS_KEY_ID }} >> .env
                 echo AWS_SECRET_ACCESS_KEY=${{ secrets.STAGE_AWS_SECRET_ACCESS_KEY }} >> .env
                 echo AWS_STORAGE_BUCKET_NAME=${{ secrets.STAGE_AWS_STORAGE_BUCKET_NAME }} >> .env
-                echo AWS_AWS_S3_ENDPOINT_URL=${{ secrets.STAGE_AWS_S3_ENDPOINT_URL }} >> .env
+                echo AWS_S3_ENDPOINT_URL=${{ secrets.STAGE_AWS_S3_ENDPOINT_URL }} >> .env
                 echo AWS_LOCATION=${{ secrets.STAGE_AWS_LOCATION }} >> .env
                 echo AWS_MEDIA_LOCATION=${{ secrets.STAGE_AWS_MEDIA_LOCATION }} >> .env
                 echo RECAPTCHA_PUBLIC_KEY=${{ secrets.STAGE_RECAPTCHA_PUBLIC_KEY }} >> .env
@@ -126,7 +126,7 @@ jobs:
               echo AWS_ACCESS_KEY_ID=${{ secrets.PROD_AWS_ACCESS_KEY_ID }} >> .env
               echo AWS_SECRET_ACCESS_KEY=${{ secrets.PROD_AWS_SECRET_ACCESS_KEY }} >> .env
               echo AWS_STORAGE_BUCKET_NAME=${{ secrets.PROD_AWS_STORAGE_BUCKET_NAME }} >> .env
-              echo AWS_AWS_S3_ENDPOINT_URL=${{ secrets.PROD_AWS_S3_ENDPOINT_URL }} >> .env
+              echo AWS_S3_ENDPOINT_URL=${{ secrets.PROD_AWS_S3_ENDPOINT_URL }} >> .env
               echo AWS_LOCATION=${{ secrets.PROD_AWS_LOCATION }} >> .env
               echo AWS_MEDIA_LOCATION=${{ secrets.PROD_AWS_MEDIA_LOCATION }} >> .env
               echo RECAPTCHA_PUBLIC_KEY=${{ secrets.PROD_RECAPTCHA_PUBLIC_KEY }} >> .env
@@ -206,7 +206,7 @@ jobs:
                 echo AWS_ACCESS_KEY_ID=${{ secrets.STAGE_AWS_ACCESS_KEY_ID }} >> .env
                 echo AWS_SECRET_ACCESS_KEY=${{ secrets.STAGE_AWS_SECRET_ACCESS_KEY }} >> .env
                 echo AWS_STORAGE_BUCKET_NAME=${{ secrets.STAGE_AWS_STORAGE_BUCKET_NAME }} >> .env
-                echo AWS_AWS_S3_ENDPOINT_URL=${{ secrets.STAGE_AWS_S3_ENDPOINT_URL }} >> .env
+                echo AWS_S3_ENDPOINT_URL=${{ secrets.STAGE_AWS_S3_ENDPOINT_URL }} >> .env
                 echo AWS_LOCATION=${{ secrets.STAGE_AWS_LOCATION }} >> .env
                 echo AWS_MEDIA_LOCATION=${{ secrets.STAGE_AWS_MEDIA_LOCATION }} >> .env
                 echo RECAPTCHA_PUBLIC_KEY=${{ secrets.STAGE_RECAPTCHA_PUBLIC_KEY }} >> .env
@@ -295,7 +295,7 @@ jobs:
                 echo AWS_ACCESS_KEY_ID=${{ secrets.PROD_AWS_ACCESS_KEY_ID }} >> .env
                 echo AWS_SECRET_ACCESS_KEY=${{ secrets.PROD_AWS_SECRET_ACCESS_KEY }} >> .env
                 echo AWS_STORAGE_BUCKET_NAME=${{ secrets.PROD_AWS_STORAGE_BUCKET_NAME }} >> .env
-                echo AWS_AWS_S3_ENDPOINT_URL=${{ secrets.PROD_AWS_S3_ENDPOINT_URL }} >> .env
+                echo AWS_S3_ENDPOINT_URL=${{ secrets.PROD_AWS_S3_ENDPOINT_URL }} >> .env
                 echo AWS_LOCATION=${{ secrets.PROD_AWS_LOCATION }} >> .env
                 echo AWS_MEDIA_LOCATION=${{ secrets.PROD_AWS_MEDIA_LOCATION }} >> .env
                 echo RECAPTCHA_PUBLIC_KEY=${{ secrets.PROD_RECAPTCHA_PUBLIC_KEY }} >> .env
