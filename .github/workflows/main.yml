@@ -254,7 +254,7 @@ jobs:
                     docker pull $APP_IMAGE
                     docker pull $CELERY_IMAGE
                     docker pull $BEAT_IMAGE
-                    docker pull $APP_IMAGE
+                    docker pull $DB_IMAGE
                     docker-compose up -d --build
                 ENDSSH
 
@@ -336,5 +336,11 @@ jobs:
                     cd ../..
                     source .env
                     docker login ghcr.io -u $NAMESPACE -p $PERSONAL_ACCESS_TOKEN
+                    docker pull $REDIS_IMAGE
+                    docker pull $NGINX_IMAGE
+                    docker pull $APP_IMAGE
+                    docker pull $CELERY_IMAGE
+                    docker pull $BEAT_IMAGE
+                    docker pull $DB_IMAGE
                     docker-compose up -d --build
                 ENDSSH
