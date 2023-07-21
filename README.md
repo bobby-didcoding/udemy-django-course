@@ -1,4 +1,4 @@
-# <span style="color:orange">Udemy Django Course Framework</span>
+# <span style="color:orange">Udemy Django Course Framework - lecture 3</span>
 
 ## <span style="color:orange">Background</span>
 This repo has been put together as a starting point for a Udemy Django course. 
