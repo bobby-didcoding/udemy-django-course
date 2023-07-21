@@ -36,11 +36,15 @@ services:
     app:
         image: "${APP_IMAGE}"
         restart: unless-stopped
-        command: gunicorn --env DJANGO_SETTINGS_MODULE=course.conf.prod course.wsgi:application --bind 0.0.0.0:8000
+        command: >
+            bash -c "python manage.py makemigrations
+            && python manage.py migrate
+            && gunicorn -c gunicorn.conf.py --env DJANGO_SETTINGS_MODULE=course.conf.prod course.wsgi:application --bind 0.0.0.0:8000"
         ports:
             - 8000:8000
         volumes:
-            - ./backend:/home/app/backend
+            - ./backend:/code
+            - /var/log/course:/code/logs
         env_file:
             - .env
         depends_on:
@@ -57,7 +61,8 @@ services:
         env_file:
             - .env
         volumes:
-            - ./backend:/home/app/backend
+            - ./backend:/code
+            - /var/log/course:/code/logs
         depends_on:
             - db
             - redis
@@ -74,7 +79,7 @@ services:
         env_file:
             - .env
         volumes:
-            - ./backend:/home/app/backend
+            - ./backend:/code
         depends_on:
             - db
             - redis
@@ -94,6 +99,7 @@ services:
             - ./nginx/prod:/etc/nginx/conf.d
             - /etc/ssl/certs/cert.pem:/etc/ssl/cert.pem
             - /etc/ssl/certs/key.pem:/etc/ssl/key.pem
+            - /var/log/course:/var/log/nginx
         command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
         networks:
             - main_course_network

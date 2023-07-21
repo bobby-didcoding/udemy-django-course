@@ -27,7 +27,10 @@ services:
                 - "${STAGE_APP_IMAGE}"
         image: "${STAGE_APP_IMAGE}"
 
-        command: gunicorn --env DJANGO_SETTINGS_MODULE=course.conf.stage course.wsgi.stage:application --bind 0.0.0.0:8000
+        command: >
+            bash -c "python manage.py makemigrations
+            && python manage.py migrate
+            && gunicorn --env DJANGO_SETTINGS_MODULE=course.conf.stage course.wsgi.stage:application --bind 0.0.0.0:8000"
 
         expose:
             - 8000
