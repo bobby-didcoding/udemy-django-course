@@ -92,8 +92,8 @@ services:
             - "443:443"
         volumes:
             - ./nginx/prod:/etc/nginx/conf.d
-            - ./cert.pem:/etc/ssl/cert.pem
-            - ./key.pem:/etc/ssl/key.pem
+            - /etc/ssl/certs/cert.pem:/etc/ssl/cert.pem
+            - /etc/ssl/certs/key.pem:/etc/ssl/key.pem
         command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
         networks:
             - main_course_network
