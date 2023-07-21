@@ -84,3 +84,35 @@ docker-compose -f up -d --no-deps --build app
 
 ***
 ***
+
+```
+Create ssh key
+ssh-keygen
+
+add it to root authorized_key
+
+add cert.pem and key.pem to etc/ssl/certs
+
+update and upgrade packages
+
+sudo apt update
+sudo apt upgrade
+
+add new user
+
+adduser **username**
+usermod -aG sudo **username**
+gpasswd -a **username** sudo
+
+install required packages
+sudo apt install python3-pip python3-dev libpq-dev postgresql-client
+
+install docker compose
+sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+
+#We now need to apply executable permissions to the binary file. You can do this by using the following command:
+sudo chmod +x /usr/local/bin/docker-compose
+
+Create a symbolic link to /usr/bin path. You can do this by using the following command:
+sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
+```
