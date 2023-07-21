@@ -39,7 +39,7 @@ services:
         command: >
             bash -c "python manage.py makemigrations
             && python manage.py migrate
-            && gunicorn --env DJANGO_SETTINGS_MODULE=course.conf.stage course.wsgi.stage:application --bind 0.0.0.0:8000"
+            && gunicorn --env DJANGO_SETTINGS_MODULE=course.conf.stage course.wsgi:application --bind 0.0.0.0:8000"
         ports:
             - 8000:8000
         volumes:
