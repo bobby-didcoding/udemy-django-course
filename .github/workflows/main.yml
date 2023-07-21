@@ -5,14 +5,12 @@ on: [push]
 env:
     STAGE_REDIS_IMAGE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/stage_redis
     STAGE_NGINX_IMAGE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/stage_nginx
-    STAGE_CERTBOT_IMAGE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/stage_certbot
     STAGE_APP_IMAGE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/stage_app
     STAGE_CELERY_IMAGE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/stage_celery
     STAGE_BEAT_IMAGE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/stage_beat
     STAGE_DB_IMAGE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/stage_db
     PROD_REDIS_IMAGE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/prod_redis
     PROD_NGINX_IMAGE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/prod_nginx
-    PROD_CERTBOT_IMAGE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/prod_certbot
     PROD_APP_IMAGE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/prod_app
     PROD_CELERY_IMAGE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/prod_celery
     PROD_BEAT_IMAGE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/prod_beat
@@ -23,7 +21,7 @@ jobs:
     build-staging:
         name: Build Docker Images
         runs-on: ubuntu-latest
-        if: github.ref == 'refs/heads/develop'
+
         steps:
           - name: Checkout master
             uses: actions/checkout@v1
@@ -60,12 +58,12 @@ jobs:
                 echo STRIPE_PUBLISHABLE=${{ secrets.STAGE_STRIPE_PUBLISHABLE }} >> .env
                 echo STRIPE_SECRET=${{ secrets.STAGE_STRIPE_SECRET }} >> .env
                 echo COOKIE_BOT=${{ secrets.STAGE_COOKIE_BOT }} >> .env
+                echo REDIS_PASSWORD=${{ secrets.STAGE_REDIS_PASSWORD }} >> .env
 
           - name: Set environment variables
             run: |
                 echo "STAGE_REDIS_IMAGE=$(echo ${{env.STAGE_REDIS_IMAGE}} )" >> $GITHUB_ENV
                 echo "STAGE_NGINX_IMAGE=$(echo ${{env.STAGE_NGINX_IMAGE}} )" >> $GITHUB_ENV
-                echo "STAGE_CERTBOT_IMAGE=$(echo ${{env.STAGE_CERTBOT_IMAGE}} )" >> $GITHUB_ENV
                 echo "STAGE_APP_IMAGE=$(echo ${{env.STAGE_APP_IMAGE}} )" >> $GITHUB_ENV
                 echo "STAGE_CELERY_IMAGE=$(echo ${{env.STAGE_CELERY_IMAGE}} )" >> $GITHUB_ENV
                 echo "STAGE_BEAT_IMAGE=$(echo ${{env.STAGE_BEAT_IMAGE}} )" >> $GITHUB_ENV
@@ -80,19 +78,17 @@ jobs:
             run: |
                 docker pull ${{ env.STAGE_REDIS_IMAGE }} || true
                 docker pull ${{ env.STAGE_NGINX_IMAGE }} || true
-                docker pull ${{ env.STAGE_CERTBOT_IMAGE }} || true
                 docker pull ${{ env.STAGE_DB_IMAGE }} || true
                 docker pull ${{ env.STAGE_APP_IMAGE }} || true
                 docker pull ${{ env.STAGE_CELERY_IMAGE }} || true
                 docker pull ${{ env.STAGE_BEAT_IMAGE }} || true
           - name: Build stage images
             run: |
-                docker-compose -f compose/docker-compose.stage.cicd.yml build
+                docker-compose -f docker-compose.stage.cicd.yml build
           - name: Push images
             run: |
                 docker push ${{ env.STAGE_REDIS_IMAGE }}
                 docker push ${{ env.STAGE_NGINX_IMAGE }}
-                docker push ${{ env.STAGE_CERTBOT_IMAGE }}
                 docker push ${{ env.STAGE_APP_IMAGE }}
                 docker push ${{ env.STAGE_CELERY_IMAGE }}
                 docker push ${{ env.STAGE_BEAT_IMAGE }}
@@ -101,7 +97,6 @@ jobs:
     build-production:
       name: Build Docker Images
       runs-on: ubuntu-latest
-      if: github.ref == 'refs/heads/develop'
       steps:
         - name: Checkout master
           uses: actions/checkout@v1
@@ -138,13 +133,13 @@ jobs:
               echo STRIPE_PUBLISHABLE=${{ secrets.PROD_STRIPE_PUBLISHABLE }} >> .env
               echo STRIPE_SECRET=${{ secrets.PROD_STRIPE_SECRET }} >> .env
               echo COOKIE_BOT=${{ secrets.PROD_COOKIE_BOT }} >> .env
+              echo REDIS_PASSWORD=${{ secrets.PROD_REDIS_PASSWORD }} >> .env
 
         - name: Set environment variables
           run: |
 
               echo "PROD_REDIS_IMAGE=$(echo ${{env.PROD_REDIS_IMAGE}} )" >> $GITHUB_ENV
               echo "PROD_NGINX_IMAGE=$(echo ${{env.PROD_NGINX_IMAGE}} )" >> $GITHUB_ENV
-              echo "PROD_CERTBOT_IMAGE=$(echo ${{env.PROD_CERTBOT_IMAGE}} )" >> $GITHUB_ENV
               echo "PROD_APP_IMAGE=$(echo ${{env.PROD_APP_IMAGE}} )" >> $GITHUB_ENV
               echo "PROD_CELERY_IMAGE=$(echo ${{env.PROD_CELERY_IMAGE}} )" >> $GITHUB_ENV
               echo "PROD_BEAT_IMAGE=$(echo ${{env.PROD_BEAT_IMAGE}} )" >> $GITHUB_ENV
@@ -158,7 +153,6 @@ jobs:
           run: |
               docker pull ${{ env.PROD_REDIS_IMAGE }} || true
               docker pull ${{ env.PROD_NGINX_IMAGE }} || true
-              docker pull ${{ env.PROD_CERTBOT_IMAGE }} || true
               docker pull ${{ env.PROD_DB_IMAGE }} || true
               docker pull ${{ env.PROD_APP_IMAGE }} || true
               docker pull ${{ env.PROD_CELERY_IMAGE }} || true
@@ -166,12 +160,11 @@ jobs:
 
         - name: Build production images
           run: |
-              docker-compose -f compose/docker-compose.prod.cicd.yml build
+              docker-compose -f docker-compose.prod.cicd.yml build
         - name: Push images
           run: |
               docker push ${{ env.PROD_REDIS_IMAGE }}
               docker push ${{ env.PROD_NGINX_IMAGE }}
-              docker push ${{ env.PROD_CERTBOT_IMAGE }}
               docker push ${{ env.PROD_APP_IMAGE }}
               docker push ${{ env.PROD_CELERY_IMAGE }}
               docker push ${{ env.PROD_BEAT_IMAGE }}
@@ -219,10 +212,10 @@ jobs:
                 echo STRIPE_PUBLISHABLE=${{ secrets.STAGE_STRIPE_PUBLISHABLE }} >> .env
                 echo STRIPE_SECRET=${{ secrets.STAGE_STRIPE_SECRET }} >> .env
                 echo COOKIE_BOT=${{ secrets.STAGE_COOKIE_BOT }} >> .env
+                echo REDIS_PASSWORD=${{ secrets.STAGE_REDIS_PASSWORD }} >> .env
 
                 echo REDIS_IMAGE=${{ env.STAGE_REDIS_IMAGE }} >> .env
                 echo NGINX_IMAGE=${{ env.STAGE_NGINX_IMAGE }} >> .env
-                echo CERTBOT_IMAGE=${{ env.STAGE_CERTBOT_IMAGE }} >> .env
                 echo APP_IMAGE=${{ env.STAGE_APP_IMAGE }} >> .env
                 echo CELERY_IMAGE=${{ env.STAGE_CELERY_IMAGE }} >> .env
                 echo BEAT_IMAGE=${{ env.STAGE_BEAT_IMAGE }} >> .env
@@ -255,7 +248,13 @@ jobs:
                     rm celery.prod.py
                     cd ../..
                     source .env
-                    docker login ghcr.io -u $NAMESPACE -p $PERSONAL_ACCESS_TOKEN
+                    echo ${{secrets.PERSONAL_ACCESS_TOKEN}} | docker login ghcr.io -u ${{ secrets.NAMESPACE }} --password-stdin
+                    docker pull $REDIS_IMAGE
+                    docker pull $NGINX_IMAGE
+                    docker pull $APP_IMAGE
+                    docker pull $CELERY_IMAGE
+                    docker pull $BEAT_IMAGE
+                    docker pull $DB_IMAGE
                     docker-compose up -d --build
                 ENDSSH
 
@@ -264,7 +263,7 @@ jobs:
         runs-on: ubuntu-latest
         needs: build-production
 
-        if: github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/prod'
         steps:
           - name: Checkout main
             uses: actions/checkout@v1
@@ -301,10 +300,10 @@ jobs:
                 echo STRIPE_PUBLISHABLE=${{ secrets.PROD_STRIPE_PUBLISHABLE }} >> .env
                 echo STRIPE_SECRET=${{ secrets.PROD_STRIPE_SECRET }} >> .env
                 echo COOKIE_BOT=${{ secrets.PROD_COOKIE_BOT }} >> .env
+                echo REDIS_PASSWORD=${{ secrets.PROD_REDIS_PASSWORD }} >> .env
 
                 echo REDIS_IMAGE=${{ env.PROD_REDIS_IMAGE }} >> .env
                 echo NGINX_IMAGE=${{ env.PROD_NGINX_IMAGE }} >> .env
-                echo CERTBOT_IMAGE=${{ env.PROD_CERTBOT_IMAGE }} >> .env
                 echo APP_IMAGE=${{ env.PROD_APP_IMAGE }} >> .env
                 echo CELERY_IMAGE=${{ env.PROD_CELERY_IMAGE }} >> .env
                 echo BEAT_IMAGE=${{ env.PROD_BEAT_IMAGE }} >> .env
@@ -336,6 +335,12 @@ jobs:
                     rm wsgi.stage.py
                     cd ../..
                     source .env
-                    docker login ghcr.io -u $NAMESPACE -p $PERSONAL_ACCESS_TOKEN
+                    echo ${{secrets.PERSONAL_ACCESS_TOKEN}} | docker login ghcr.io -u ${{ secrets.NAMESPACE }} --password-stdin
+                    docker pull $REDIS_IMAGE
+                    docker pull $NGINX_IMAGE
+                    docker pull $APP_IMAGE
+                    docker pull $CELERY_IMAGE
+                    docker pull $BEAT_IMAGE
+                    docker pull $DB_IMAGE
                     docker-compose up -d --build
                 ENDSSH
