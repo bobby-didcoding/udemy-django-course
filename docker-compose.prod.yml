@@ -3,7 +3,7 @@ version: '3'
 services:
     
     db:
-        image: "${PROD_DB_IMAGE}"
+        image: "${DB_IMAGE}"
         restart: unless-stopped
         environment:
             - POSTGRES_USER=${DB_USER}
@@ -16,7 +16,7 @@ services:
 
 
     redis:
-        image: "${PROD_REDIS_IMAGE}"
+        image: "${REDIS_IMAGE}"
         restart: unless-stopped
         container_name: redis
         command: >
@@ -34,7 +34,7 @@ services:
 
 
     app:
-        image: "${PROD_APP_IMAGE}"
+        image: "${APP_IMAGE}"
         restart: unless-stopped
         command: gunicorn --env DJANGO_SETTINGS_MODULE=course.conf.prod course.wsgi:application --bind 0.0.0.0:8000
         ports:
@@ -52,7 +52,7 @@ services:
       
     celery:
         restart: unless-stopped
-        image: "${PROD_CELERY_IMAGE}"
+        image: "${CELERY_IMAGE}"
         command: celery -A course worker --loglevel=info --logfile=logs/celery.log
         env_file:
             - .env
@@ -69,7 +69,7 @@ services:
    
     beat:
         restart: unless-stopped
-        image: "${PROD_BEAT_IMAGE}"
+        image: "${BEAT_IMAGE}"
         command: celery -A course beat -l info
         env_file:
             - .env
@@ -86,14 +86,14 @@ services:
     nginx:
         container_name: nginx
         restart: unless-stopped
-        image: "${PROD_NGINX_IMAGE}"
+        image: "${NGINX_IMAGE}"
         ports:
             - "80:80"
             - "443:443"
         volumes:
             - ./nginx/prod:/etc/nginx/conf.d
-            - ./cert.pem:/etc/ssl/cert.pem
-            - ./key.pem:/etc/ssl/key.pem
+            - /etc/ssl/certs/cert.pem:/etc/ssl/cert.pem
+            - /etc/ssl/certs/key.pem:/etc/ssl/key.pem
         command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
         networks:
             - main_course_network
