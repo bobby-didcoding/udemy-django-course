@@ -59,6 +59,7 @@ jobs:
                 echo STRIPE_SECRET=${{ secrets.STAGE_STRIPE_SECRET }} >> .env
                 echo COOKIE_BOT=${{ secrets.STAGE_COOKIE_BOT }} >> .env
                 echo REDIS_PASSWORD=${{ secrets.STAGE_REDIS_PASSWORD }} >> .env
+                echo SENTRY_DNS=${{ secrets.STAGE_SENTRY_DNS }} >> .env
 
           - name: Set environment variables
             run: |
@@ -134,6 +135,7 @@ jobs:
               echo STRIPE_SECRET=${{ secrets.PROD_STRIPE_SECRET }} >> .env
               echo COOKIE_BOT=${{ secrets.PROD_COOKIE_BOT }} >> .env
               echo REDIS_PASSWORD=${{ secrets.PROD_REDIS_PASSWORD }} >> .env
+              echo SENTRY_DNS=${{ secrets.PROD_SENTRY_DNS }} >> .env
 
         - name: Set environment variables
           run: |
@@ -213,6 +215,7 @@ jobs:
                 echo STRIPE_SECRET=${{ secrets.STAGE_STRIPE_SECRET }} >> .env
                 echo COOKIE_BOT=${{ secrets.STAGE_COOKIE_BOT }} >> .env
                 echo REDIS_PASSWORD=${{ secrets.STAGE_REDIS_PASSWORD }} >> .env
+                echo SENTRY_DNS=${{ secrets.STAGE_SENTRY_DNS }} >> .env
 
                 echo REDIS_IMAGE=${{ env.STAGE_REDIS_IMAGE }} >> .env
                 echo NGINX_IMAGE=${{ env.STAGE_NGINX_IMAGE }} >> .env
@@ -301,6 +304,7 @@ jobs:
                 echo STRIPE_SECRET=${{ secrets.PROD_STRIPE_SECRET }} >> .env
                 echo COOKIE_BOT=${{ secrets.PROD_COOKIE_BOT }} >> .env
                 echo REDIS_PASSWORD=${{ secrets.PROD_REDIS_PASSWORD }} >> .env
+                echo SENTRY_DNS=${{ secrets.PROD_SENTRY_DNS }} >> .env
 
                 echo REDIS_IMAGE=${{ env.PROD_REDIS_IMAGE }} >> .env
                 echo NGINX_IMAGE=${{ env.PROD_NGINX_IMAGE }} >> .env
