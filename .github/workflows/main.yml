@@ -248,7 +248,7 @@ jobs:
                     rm celery.prod.py
                     cd ../..
                     source .env
-                    docker login ghcr.io -u $NAMESPACE -p $PERSONAL_ACCESS_TOKEN
+                    echo ${{secrets.PERSONAL_ACCESS_TOKEN}} | docker login ghcr.io -u ${{ secrets.NAMESPACE }} --password-stdin
                     docker pull $REDIS_IMAGE
                     docker pull $NGINX_IMAGE
                     docker pull $APP_IMAGE
@@ -335,7 +335,7 @@ jobs:
                     rm wsgi.stage.py
                     cd ../..
                     source .env
-                    docker login ghcr.io -u $NAMESPACE -p $PERSONAL_ACCESS_TOKEN
+                    echo ${{secrets.PERSONAL_ACCESS_TOKEN}} | docker login ghcr.io -u ${{ secrets.NAMESPACE }} --password-stdin
                     docker pull $REDIS_IMAGE
                     docker pull $NGINX_IMAGE
                     docker pull $APP_IMAGE
