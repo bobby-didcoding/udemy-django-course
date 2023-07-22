@@ -74,9 +74,5 @@ The following example will rebuild one container
 docker-compose -f up -d --no-deps --build app
 ```
 
-## <span style="color:orange">Next step<span>
-
-Each branch has its own `LECTURE_OVERVIEW.md` file that describes what we will cover during the lecture.
-
 ***
 ***
